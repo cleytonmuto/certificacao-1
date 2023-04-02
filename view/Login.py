@@ -9,7 +9,7 @@ class Login:
         pass
 
     def sgLogin(self):
-        sg.theme("SystemDefault1")
+        sg.theme("DarkPurple4")
         loginLayout = [
             [sg.Image(filename="./resources/img/estacio.png")],
             [sg.Text("Login"),],

@@ -6,7 +6,7 @@ class CadastroSistema:
         pass
 
     def sgCadastroSistema(self):
-        sg.theme("SystemDefault1")
+        sg.theme("DarkPurple4")
         layoutCadastroSistema = [
 
         ]

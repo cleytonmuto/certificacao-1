@@ -6,7 +6,7 @@ class CadastroMatriz:
         pass
 
     def sgCadastroMatriz(self):
-        sg.theme("SystemDefault1")
+        sg.theme("DarkPurple4")
         layoutCadastroMatriz = [
 
         ]

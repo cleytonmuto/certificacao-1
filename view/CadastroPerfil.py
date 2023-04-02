@@ -6,7 +6,7 @@ class CadastroPerfil:
         pass
 
     def sgCadastroPerfil(self):
-        sg.theme("SystemDefault1")
+        sg.theme("DarkPurple4")
         layoutCadastroPerfil = [
 
         ]
