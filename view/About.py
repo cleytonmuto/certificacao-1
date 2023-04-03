@@ -7,7 +7,7 @@ class About:
         pass
 
     def sgAbout(self):
-        sg.theme("DarkPurple4")
+        sg.theme("SystemDefault1")
         layoutAbout = [
             [sg.Image(filename="./resources/img/rockets.png",size=(113,113))],
             [sg.Push()],
@@ -26,7 +26,7 @@ class About:
             [sg.Push()],
             sg.Button("Início", size=(10)),
         ],
-        aboutWindow = sg.Window("Sobre", layout=layoutAbout, font="Roboto 16", element_justification="center", size=(500,500))
+        aboutWindow = sg.Window("Sobre", layout=layoutAbout, font="Roboto 16", element_justification="center", size=(500,400))
         while True:
             event, _ = aboutWindow.read()
             if event == "Início":
