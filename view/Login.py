@@ -9,7 +9,7 @@ class Login:
         pass
 
     def sgLogin(self):
-        sg.theme("DarkPurple4")
+        sg.theme("DarkBlue15")
         loginLayout = [
             [sg.Image(filename="./resources/img/estacio.png")],
             [sg.Text("Login"),],
@@ -20,7 +20,7 @@ class Login:
             [sg.Button("Login", pad=(20,0), size=(10)), sg.Button("Sair", pad=(20,0), size=(10)), sg.Button("Sobre", pad=(20,0), size=(10))],
             [sg.Button("Submit", visible=False, bind_return_key=True)]
         ]
-        loginWindow = sg.Window("Sistema de Controle de Perfis", layout=loginLayout, font="Roboto 14", size=(500,400))
+        loginWindow = sg.Window("Sistema de Controle de Perfis", layout=loginLayout, font="Arial 14", size=(500,400))
         while True:
             event, content = loginWindow.read()
             if event == "Login" or event == "Submit":
@@ -34,7 +34,6 @@ class Login:
                 sg.Exit()
                 break
             if event == "Sobre":
-                loginWindow.close()
                 about = About.About()
                 about.sgAbout()
         loginWindow.close()

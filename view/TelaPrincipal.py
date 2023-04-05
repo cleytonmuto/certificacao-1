@@ -7,17 +7,17 @@ class TelaPrincipal:
         pass
 
     def sgTelaPrincipal(self):
-        sg.theme("SystemDefault1")
+        sg.theme("DarkBlue15")
         layoutTelaPrincipal = [
-            [sg.Text("CONTROLE DE PERFIS", font="Roboto 30", text_color="#5c2fd8")],
+            [sg.Text("CONTROLE DE PERFIS", font="Arial 30")],
             [sg.HSeparator()],
             [sg.Text("")],
             [sg.Button("CADASTRAR", size=(20),), sg.Button("CONSULTAR", size=(20))],
             [sg.Button("CADASTRAR", size=(20),), sg.Button("CONSULTAR", size=(20))],
             [sg.Text("")],
-            [sg.Button("SAIR", button_color="#a0a0a0", font="Roboto 15", size=(15))],
+            [sg.Button("SAIR", font="Arial 15", size=(15))],
         ]
-        telaPrincipalWindow = sg.Window("Tela Principal", layout=layoutTelaPrincipal, size=(500,300), font="Roboto 15", element_justification="center")
+        telaPrincipalWindow = sg.Window("Tela Principal", layout=layoutTelaPrincipal, size=(500,300), font="Arial 15", element_justification="center")
         events = ["CADASTRAR","SAIR"]
         while True:
             event, _ = telaPrincipalWindow.read()
@@ -33,3 +33,4 @@ class TelaPrincipal:
                     case sg.WIN_CLOSED:
                         sg.Exit()
                         break
+        telaPrincipalWindow.close()

@@ -6,11 +6,11 @@ class CadastroPerfil:
         pass
 
     def sgCadastroPerfil(self):
-        sg.theme("DarkPurple4")
+        sg.theme("DarkBlue15")
         layoutCadastroPerfil = [
 
         ]
-        cadastroPerfilWindow = sg.Window("Perfis", layout=layoutCadastroPerfil, size=(500,300), font="Roboto 15", element_justification="center")
+        cadastroPerfilWindow = sg.Window("Perfis", layout=layoutCadastroPerfil, size=(500,300), font="Arial 15", element_justification="center")
         events = ["CADASTRAR","SAIR"]
         while True:
             event, _ = cadastroPerfilWindow.read()

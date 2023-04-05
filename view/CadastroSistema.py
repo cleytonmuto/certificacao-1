@@ -6,11 +6,11 @@ class CadastroSistema:
         pass
 
     def sgCadastroSistema(self):
-        sg.theme("DarkPurple4")
+        sg.theme("DarkBlue15")
         layoutCadastroSistema = [
 
         ]
-        cadastroSistemaWindow = sg.Window("Sistemas", layout=layoutCadastroSistema, size=(500,300), font="Roboto 15", element_justification="center")
+        cadastroSistemaWindow = sg.Window("Sistemas", layout=layoutCadastroSistema, size=(500,300), font="Arial 15", element_justification="center")
         events = ["CADASTRAR","SAIR"]
         while True:
             event, _ = cadastroSistemaWindow.read()

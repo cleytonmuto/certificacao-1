@@ -6,11 +6,11 @@ class CadastroMatriz:
         pass
 
     def sgCadastroMatriz(self):
-        sg.theme("DarkPurple4")
+        sg.theme("DarkBlue15")
         layoutCadastroMatriz = [
 
         ]
-        cadastroMatrizWindow = sg.Window("Matriz SoD", layout=layoutCadastroMatriz, size=(500,300), font="Roboto 15", element_justification="center")
+        cadastroMatrizWindow = sg.Window("Matriz SoD", layout=layoutCadastroMatriz, size=(500,300), font="Arial 15", element_justification="center")
         events = ["CADASTRAR","SAIR"]
         while True:
             event, _ = cadastroMatrizWindow.read()
