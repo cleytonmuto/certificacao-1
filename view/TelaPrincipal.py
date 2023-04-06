@@ -1,36 +1,13 @@
-import PySimpleGUI as sg
-import view.CadastroPerfil as CadastroPerfil
+import customtkinter as ctk
 
-class TelaPrincipal:
+ctk.set_appearance_mode("System")
+ctk.set_default_colo_theme("blue")
+
+class TelaPrincipal(ctk.CTk):
 
     def __init__(self):
-        pass
+        super.__init__()
 
-    def sgTelaPrincipal(self):
-        sg.theme("DarkBlue15")
-        layoutTelaPrincipal = [
-            [sg.Text("CONTROLE DE PERFIS", font="Arial 30")],
-            [sg.HSeparator()],
-            [sg.Text("")],
-            [sg.Button("CADASTRAR", size=(20),), sg.Button("CONSULTAR", size=(20))],
-            [sg.Button("CADASTRAR", size=(20),), sg.Button("CONSULTAR", size=(20))],
-            [sg.Text("")],
-            [sg.Button("SAIR", font="Arial 15", size=(15))],
-        ]
-        telaPrincipalWindow = sg.Window("Tela Principal", layout=layoutTelaPrincipal, size=(500,300), font="Arial 15", element_justification="center")
-        events = ["CADASTRAR","SAIR"]
-        while True:
-            event, _ = telaPrincipalWindow.read()
-            if event in events:
-                telaPrincipalWindow.close()
-                match event:
-                    case "CADASTRAR":
-                        cadastroPerfil = CadastroPerfil.CadastroPerfil()
-                        cadastroPerfil.sgCadastroPerfil()
-                    case "SAIR":
-                        sg.Exit()
-                        break
-                    case sg.WIN_CLOSED:
-                        sg.Exit()
-                        break
-        telaPrincipalWindow.close()
+if __name__ == "__main__":
+    app = TelaPrincipal
+    app.mainloop()
