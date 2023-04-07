@@ -77,13 +77,36 @@ class App(customtkinter.CTk):
         self.home_frame_large_image_label.grid(row=0, column=0, padx=20, pady=10)
 
         self.second_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
+        self.second_frame.grid_columnconfigure(0, weight=1)
+        self.second_frame.grid_rowconfigure(0, weight=1)
+
         self.second_frame_label = customtkinter.CTkLabel(self.second_frame, text= "Aba Sistemas",
-                                                         compound="center",font=customtkinter.CTkFont(size=48, weight="bold") )
-        self.second_frame_label.grid(row=3,column=0, padx=40, pady=40)
+                                                         font=customtkinter.CTkFont(size=48, weight="bold") )
+        self.second_frame_label.grid(row=0,column=0, padx=20, pady=20)
 
         self.third_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
+        self.third_frame.grid_columnconfigure(0, weight=1)
+        self.third_frame.grid_rowconfigure(0, weight=1)
+
+        self.third_frame_label = customtkinter.CTkLabel(self.third_frame, text= "Aba Perfis",
+                                                         font=customtkinter.CTkFont(size=48, weight="bold") )
+        self.third_frame_label.grid(row=0,column=0, padx=20, pady=20)
+
         self.fourth_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
+        self.fourth_frame.grid_columnconfigure(0, weight=1)
+        self.fourth_frame.grid_rowconfigure(0, weight=1)
+
+        self.fourth_frame_label = customtkinter.CTkLabel(self.fourth_frame, text= "Aba da Matriz SoD",
+                                                         font=customtkinter.CTkFont(size=48, weight="bold") )
+        self.fourth_frame_label.grid(row=0,column=0, padx=20, pady=20)
+
         self.fifth_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
+        self.fifth_frame.grid_columnconfigure(0, weight=1)
+        self.fifth_frame.grid_rowconfigure(0, weight=1)
+
+        self.fifth_frame_label = customtkinter.CTkLabel(self.fifth_frame, text= "Aba Usuários",
+                                                         font=customtkinter.CTkFont(size=48, weight="bold") )
+        self.fifth_frame_label.grid(row=0,column=0, padx=20, pady=20)
     
     def select_frame_by_name(self, name):
         # set button color for selected button
@@ -141,7 +164,6 @@ class App(customtkinter.CTk):
         new_scaling_float = int(new_scaling.replace("%", "")) / 100
         customtkinter.set_widget_scaling(new_scaling_float)
     
-
 if __name__ == "__main__":
     app = App()
     app.mainloop()
