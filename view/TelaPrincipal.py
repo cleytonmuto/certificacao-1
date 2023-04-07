@@ -66,19 +66,19 @@ class App(customtkinter.CTk):
         self.appearanceModeLabel = customtkinter.CTkLabel(self.navigationFrame, text="Theme:", anchor="w")
         self.appearanceModeLabel.grid(row=6, column=0, padx=20, pady=(40, 0), sticky="ns")
         self.appearanceModeOptioneMenu = customtkinter.CTkOptionMenu(self.navigationFrame, values=["Dark", "Light", "System"],
-                                                             command=self.change_appearance_mode_event)
+                                                             command=self.changeAppearanceModeEvent)
         self.appearanceModeOptioneMenu.grid(row=7, column=0, padx=20, pady=10, sticky="ns")
 
         self.scalingLabel = customtkinter.CTkLabel(self.navigationFrame, text="UI Scaling:", anchor="w")
         self.scalingLabel.grid(row=8, column=0, padx=20, pady=10, sticky="ns")
         self.scalingOptionMenu = customtkinter.CTkOptionMenu(self.navigationFrame, values=["80%", "90%", "100%", "110%", "120%"],
-                                                               command=self.change_scaling_event)
+                                                               command=self.changeScalingEvent)
         self.scalingOptionMenu.grid(row=9, column=0, padx=20, pady=10, sticky="ns")
 
         self.resizableLabel = customtkinter.CTkLabel(self.navigationFrame, text="Window is Resizable:", anchor="w")
         self.resizableLabel.grid(row=10, column=0, padx=20, pady=10, sticky="ns")
         self.resizableMenu = customtkinter.CTkOptionMenu(self.navigationFrame, values=["True", "False"],
-                                                             command=self.change_resizable_event)
+                                                             command=self.changeResizableEvent)
         self.resizableMenu.grid(row=11, column=0, padx=20, pady=10, sticky="ns")
 
         self.homeFrame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
@@ -108,7 +108,6 @@ class App(customtkinter.CTk):
         self.telaMatriz = TelaMatriz.TelaMatriz()
         self.telaMatriz.showAt(self.frameMatriz)
 
-
         self.frameUsuario = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.frameUsuario.grid_columnconfigure(0, weight=1)
         self.frameUsuario.grid_rowconfigure(0, weight=1)
@@ -117,34 +116,27 @@ class App(customtkinter.CTk):
         self.telaUsuario.showAt(self.frameUsuario)
 
     def selectFrameByName(self, name):
-        # set button color for selected button
         self.homeButton.configure(fg_color=("gray75", "gray25") if name == "home" else "transparent")
-        self.frameSistemaButton.configure(fg_color=("gray75", "gray25") if name == "frame_2" else "transparent")
-        self.framePerfilButton.configure(fg_color=("gray75", "gray25") if name == "frame_3" else "transparent")
-        self.frameMatrizButton.configure(fg_color=("gray75", "gray25") if name == "frame_4" else "transparent")
-        self.frameUsuarioButton.configure(fg_color=("gray75", "gray25") if name == "frame_5" else "transparent")
-
-        # show selected frame
+        self.frameSistemaButton.configure(fg_color=("gray75", "gray25") if name == "frameSistema" else "transparent")
+        self.framePerfilButton.configure(fg_color=("gray75", "gray25") if name == "framePerfil" else "transparent")
+        self.frameMatrizButton.configure(fg_color=("gray75", "gray25") if name == "frameMatriz" else "transparent")
+        self.frameUsuarioButton.configure(fg_color=("gray75", "gray25") if name == "frameUsuario" else "transparent")
         if name == "home":
             self.homeFrame.grid(row=0, column=1, sticky="nsew")
         else:
             self.homeFrame.grid_forget()
-
         if name == "frameSistema":
             self.frameSistema.grid(row=0, column=1, sticky="nsew")
         else:
             self.frameSistema.grid_forget()
-
         if name == "framePerfil":
             self.framePerfil.grid(row=0, column=1, sticky="nsew")
         else:
             self.framePerfil.grid_forget()
-        
         if name == "frameMatriz":
             self.frameMatriz.grid(row=0, column=1, sticky="nsew")
         else:
             self.frameMatriz.grid_forget()
-
         if name == "frameUsuario":
             self.frameUsuario.grid(row=0, column=1, sticky="nsew")
         else:
@@ -165,15 +157,14 @@ class App(customtkinter.CTk):
     def frameUsuarioButtonEvent(self):
         self.selectFrameByName("frameUsuario")
 
-    def change_appearance_mode_event(self, new_appearance_mode: str):
-        customtkinter.set_appearance_mode(new_appearance_mode)
+    def changeAppearanceModeEvent(self, newAppearanceMode: str):
+        customtkinter.set_appearance_mode(newAppearanceMode)
     
-    def change_scaling_event(self, new_scaling: str):
-        new_scaling_float = int(new_scaling.replace("%", "")) / 100
-        customtkinter.set_widget_scaling(new_scaling_float)
+    def changeScalingEvent(self, newScaling: str):
+        customtkinter.set_widget_scaling(int(newScaling.replace("%", "")) / 100)
 
-    def change_resizable_event(self, new_resizable: str):
-        self.resizable(new_resizable, new_resizable)
+    def changeResizableEvent(self, newResizable: str):
+        self.resizable(newResizable, newResizable)
     
 if __name__ == "__main__":
     app = App()
