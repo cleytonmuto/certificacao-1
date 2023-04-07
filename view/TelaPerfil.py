@@ -14,7 +14,7 @@ class TelaPerfil(customtkinter.CTk):
             text="Perfis", font=customtkinter.CTkFont(size=24, weight="bold"))
         self.framePerfilLabel.grid(row=0,column=0, padx=20, pady=20, sticky="W")
 
-        matrizPerfil = [(1,"Motorista","habilitado"), (2,"Cobrador","desabilitado")]
+        matrizPerfil = [(1,"Motorista","descricao M"), (2,"Cobrador","descricao C")]
         totalRows = len(matrizPerfil)
         totalColumns = len(matrizPerfil[0])
         entryVar = [ [ 0 for j in range(totalColumns) ] for i in range(totalRows) ]
@@ -29,12 +29,12 @@ class TelaPerfil(customtkinter.CTk):
                     textvariable=entryVar[i][j],state="readonly",font=customtkinter.CTkFont(size=12))
                 self.celula.grid(row=i + 1, column=j, padx=0, pady=0, sticky="ns")
 
-        self.codigoPerfilLabel = customtkinter.CTkLabel(component,
-            text="Código do Perfil", font=customtkinter.CTkFont(size=12))
-        self.codigoPerfilLabel.grid(row=minRow + 2,column=0, padx=(0,10), pady=(60,10), sticky="e")
-        self.codigoPerfilEntry = customtkinter.CTkEntry(component,
-            placeholder_text="Código do Perfil", font=customtkinter.CTkFont(size=12))
-        self.codigoPerfilEntry.grid(row=minRow + 2,column=1, padx=0, pady=(60,10), sticky="w")
+        self.codigoSistemaLabel = customtkinter.CTkLabel(component,
+            text="Código do Sistema", font=customtkinter.CTkFont(size=12))
+        self.codigoSistemaLabel.grid(row=minRow + 2,column=0, padx=(0,10), pady=(60,10), sticky="e")
+        self.codigoSistemaEntry = customtkinter.CTkEntry(component,
+            placeholder_text="Código do Sistema", font=customtkinter.CTkFont(size=12))
+        self.codigoSistemaEntry.grid(row=minRow + 2,column=1, padx=0, pady=(60,10), sticky="w")
 
         self.nomePerfilLabel = customtkinter.CTkLabel(component,
             text="Nome do Perfil", font=customtkinter.CTkFont(size=12))
