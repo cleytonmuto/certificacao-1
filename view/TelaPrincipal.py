@@ -16,6 +16,7 @@ class App(customtkinter.CTk):
         
         self.title("Sistema de Controle de Perfis")
         self.geometry("1100x600")
+        self.resizable(False,False)
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
