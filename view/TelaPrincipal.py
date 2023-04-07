@@ -16,7 +16,7 @@ class App(customtkinter.CTk):
         
         self.title("Sistema de Controle de Perfis")
         self.geometry("1100x600")
-        self.resizable(False,False)
+        self.resizable(True,True)
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -65,16 +65,22 @@ class App(customtkinter.CTk):
         self.frameUsuarioButton.grid(row=5, column=0, sticky="ew")
 
         self.appearanceModeLabel = customtkinter.CTkLabel(self.navigationFrame, text="Theme:", anchor="w")
-        self.appearanceModeLabel.grid(row=6, column=0, padx=20, pady=(100, 0), sticky="ns")
+        self.appearanceModeLabel.grid(row=6, column=0, padx=20, pady=(40, 0), sticky="ns")
         self.appearanceModeOptioneMenu = customtkinter.CTkOptionMenu(self.navigationFrame, values=["Dark", "Light", "System"],
                                                              command=self.change_appearance_mode_event)
         self.appearanceModeOptioneMenu.grid(row=7, column=0, padx=20, pady=10, sticky="ns")
 
-        self.scaling_label = customtkinter.CTkLabel(self.navigationFrame, text="UI Scaling:", anchor="w")
-        self.scaling_label.grid(row=8, column=0, padx=20, pady=10, sticky="ns")
-        self.scaling_optionemenu = customtkinter.CTkOptionMenu(self.navigationFrame, values=["80%", "90%", "100%", "110%", "120%"],
+        self.scalingLabel = customtkinter.CTkLabel(self.navigationFrame, text="UI Scaling:", anchor="w")
+        self.scalingLabel.grid(row=8, column=0, padx=20, pady=10, sticky="ns")
+        self.scalingOptionMenu = customtkinter.CTkOptionMenu(self.navigationFrame, values=["80%", "90%", "100%", "110%", "120%"],
                                                                command=self.change_scaling_event)
-        self.scaling_optionemenu.grid(row=9, column=0, padx=20, pady=10, sticky="ns")
+        self.scalingOptionMenu.grid(row=9, column=0, padx=20, pady=10, sticky="ns")
+
+        self.resizableLabel = customtkinter.CTkLabel(self.navigationFrame, text="Window is Resizable:", anchor="w")
+        self.resizableLabel.grid(row=10, column=0, padx=20, pady=10, sticky="ns")
+        self.resizableMenu = customtkinter.CTkOptionMenu(self.navigationFrame, values=["True", "False"],
+                                                             command=self.change_resizable_event)
+        self.resizableMenu.grid(row=11, column=0, padx=20, pady=10, sticky="ns")
 
         self.homeFrame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.homeFrame.grid_columnconfigure(0, weight=1)
@@ -167,6 +173,9 @@ class App(customtkinter.CTk):
     def change_scaling_event(self, new_scaling: str):
         new_scaling_float = int(new_scaling.replace("%", "")) / 100
         customtkinter.set_widget_scaling(new_scaling_float)
+
+    def change_resizable_event(self, new_resizable: str):
+        self.resizable(new_resizable, new_resizable)
     
 if __name__ == "__main__":
     app = App()
