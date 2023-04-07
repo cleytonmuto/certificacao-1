@@ -3,8 +3,7 @@ import customtkinter
 import os
 from PIL import Image
 
-import TelaSistema
-import TelaPerfil
+import TelaSistema, TelaPerfil, TelaMatriz, TelaUsuario
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue")
@@ -106,18 +105,17 @@ class App(customtkinter.CTk):
         self.frameMatriz.grid_columnconfigure(0, weight=1)
         self.frameMatriz.grid_rowconfigure(0, weight=1)
 
-        self.frameMatriz_label = customtkinter.CTkLabel(self.frameMatriz, text= "Aba da Matriz SoD",
-                                                         font=customtkinter.CTkFont(size=48, weight="bold") )
-        self.frameMatriz_label.grid(row=0,column=0, padx=20, pady=20)
+        self.telaMatriz = TelaMatriz.TelaMatriz()
+        self.telaMatriz.showAt(self.frameMatriz)
+
 
         self.frameUsuario = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.frameUsuario.grid_columnconfigure(0, weight=1)
         self.frameUsuario.grid_rowconfigure(0, weight=1)
 
-        self.frameUsuarioLabel = customtkinter.CTkLabel(self.frameUsuario, text= "Aba Usuários",
-                                                         font=customtkinter.CTkFont(size=48, weight="bold") )
-        self.frameUsuarioLabel.grid(row=0,column=0, padx=20, pady=20)
-    
+        self.telaUsuario = TelaUsuario.TelaUsuario()
+        self.telaUsuario.showAt(self.frameUsuario)
+
     def selectFrameByName(self, name):
         # set button color for selected button
         self.homeButton.configure(fg_color=("gray75", "gray25") if name == "home" else "transparent")
