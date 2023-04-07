@@ -88,30 +88,18 @@ class App(customtkinter.CTk):
         self.homeFrame_large_image_label.grid(row=0, column=0, padx=20, pady=10)
 
         self.frameSistema = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
-        self.frameSistema.grid_columnconfigure(0, weight=1)
-        self.frameSistema.grid_rowconfigure(0, weight=1)
-
         self.telaSistema = TelaSistema.TelaSistema()
         self.telaSistema.showAt(self.frameSistema)
 
         self.framePerfil = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
-        self.framePerfil.grid_columnconfigure(0, weight=1)
-        self.framePerfil.grid_rowconfigure(0, weight=1)
-
         self.telaPerfil = TelaPerfil.TelaPerfil()
         self.telaPerfil.showAt(self.framePerfil)
 
         self.frameMatriz = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
-        self.frameMatriz.grid_columnconfigure(0, weight=1)
-        self.frameMatriz.grid_rowconfigure(0, weight=1)
-
         self.telaMatriz = TelaMatriz.TelaMatriz()
         self.telaMatriz.showAt(self.frameMatriz)
 
         self.frameUsuario = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
-        self.frameUsuario.grid_columnconfigure(0, weight=1)
-        self.frameUsuario.grid_rowconfigure(0, weight=1)
-
         self.telaUsuario = TelaUsuario.TelaUsuario()
         self.telaUsuario.showAt(self.frameUsuario)
 

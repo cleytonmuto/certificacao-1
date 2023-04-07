@@ -10,15 +10,53 @@ class TelaPerfil(customtkinter.CTk):
         pass
 
     def showAt(self,component):
-        self.framePerfilLabel = customtkinter.CTkLabel(component, text= "Aba Perfil",
-                                                         font=customtkinter.CTkFont(size=48, weight="bold") )
-        self.framePerfilLabel.grid(row=0,column=0, padx=20, pady=20)
+        self.framePerfilLabel = customtkinter.CTkLabel(component,
+            text="Perfis", font=customtkinter.CTkFont(size=24, weight="bold"))
+        self.framePerfilLabel.grid(row=0,column=0, padx=20, pady=20, sticky="W")
+
+        matrizPerfil = [(1,"Motorista","habilitado"), (2,"Cobrador","desabilitado")]
+        totalRows = len(matrizPerfil)
+        totalColumns = len(matrizPerfil[0])
+        entryVar = [ [ 0 for j in range(totalColumns) ] for i in range(totalRows) ]
+        for i in range(totalRows):
+            for j in range(totalColumns):
+                entryVar[i][j] = customtkinter.StringVar(value=matrizPerfil[i][j])
+        minRow = 4
+
+        for i in range(totalRows):
+            for j in range(totalColumns):
+                self.celula = customtkinter.CTkEntry(component,width=140,justify="center",
+                    textvariable=entryVar[i][j],state="readonly",font=customtkinter.CTkFont(size=12))
+                self.celula.grid(row=i + 1, column=j, padx=0, pady=0, sticky="ns")
+
+        self.codigoPerfilLabel = customtkinter.CTkLabel(component,
+            text="Código do Perfil", font=customtkinter.CTkFont(size=12))
+        self.codigoPerfilLabel.grid(row=minRow + 2,column=0, padx=(0,10), pady=(60,10), sticky="e")
+        self.codigoPerfilEntry = customtkinter.CTkEntry(component,
+            placeholder_text="Código do Perfil", font=customtkinter.CTkFont(size=12))
+        self.codigoPerfilEntry.grid(row=minRow + 2,column=1, padx=0, pady=(60,10), sticky="w")
+
+        self.nomePerfilLabel = customtkinter.CTkLabel(component,
+            text="Nome do Perfil", font=customtkinter.CTkFont(size=12))
+        self.nomePerfilLabel.grid(row=minRow + 3,column=0, padx=(0,10), pady=10, sticky="e")
+        self.nomePerfilEntry = customtkinter.CTkEntry(component,
+            placeholder_text="Nome do Perfil",font=customtkinter.CTkFont(size=12))
+        self.nomePerfilEntry.grid(row=minRow + 3,column=1, padx=0, pady=10, sticky="w")
+
+        self.descricaoPerfilLabel = customtkinter.CTkLabel(component,
+            text="Descricao do Perfil", font=customtkinter.CTkFont(size=12))
+        self.descricaoPerfilLabel.grid(row=minRow + 4,column=0, padx=(0,10), pady=10, sticky="e")
+        self.descricaoPerfilEntry = customtkinter.CTkEntry(component,
+            placeholder_text="Descricao do Perfil",font=customtkinter.CTkFont(size=12))
+        self.descricaoPerfilEntry.grid(row=minRow + 4,column=1, padx=0, pady=10, sticky="w")
+
+        self.adicionarPerfilButton = customtkinter.CTkButton(component,text="Adicionar",
+            font=customtkinter.CTkFont(size=12))
+        self.adicionarPerfilButton.grid(row=minRow + 5, column=1, padx=0, pady=10, sticky="W")
     
 if __name__ == "__main__":
     app = customtkinter.CTk()
-    app.geometry("400x300")
-    app.grid_rowconfigure(0, weight=1)
-    app.grid_columnconfigure(1, weight=1)
+    app.geometry("800x600")
     external = TelaPerfil()
     external.showAt(app)
     app.mainloop()
