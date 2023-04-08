@@ -41,11 +41,16 @@ class Main(customtkinter.CTk):
         self.checkbox = customtkinter.CTkCheckBox(self.frame,text="Remember Me")
         self.checkbox.grid(row=6, column=0, padx=10, pady=12)
 
+        self.bind("<Return>", self.enterKeyPressed)
+
     def login(self):
         if Utils.authenticate(self.entry1.get(),self.entry2.get()):
             TelaPrincipal.TelaPrincipal(self)
         else:
             tkmb.showinfo(title="Login failed!",message="Usuário ou senha inválidos!")
+
+    def enterKeyPressed(self, event):
+        self.login()
 
     def about(self):
         About.About(self)
