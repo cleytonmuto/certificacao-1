@@ -3,10 +3,18 @@ import customtkinter
 import os
 from PIL import Image
 
-import view.TelaSistema as TelaSistema
-import view.TelaPerfil as TelaPerfil
-import view.TelaMatriz as TelaMatriz
-import view.TelaUsuario as TelaUsuario
+absolutePath = os.path.abspath(os.getcwd())
+
+if absolutePath.endswith("certificacao-1"):
+    import view.TelaSistema as TelaSistema
+    import view.TelaPerfil as TelaPerfil
+    import view.TelaMatriz as TelaMatriz
+    import view.TelaUsuario as TelaUsuario
+elif absolutePath.endswith("view"):
+    import TelaSistema
+    import TelaPerfil
+    import TelaMatriz
+    import TelaUsuario
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue")
@@ -162,4 +170,4 @@ class TelaPrincipal(customtkinter.CTkToplevel):
         self.resizable(newResizable,newResizable)
     
 if __name__ == "__main__":
-    app = TelaPrincipal()
+    app = TelaPrincipal(customtkinter.CTk())
