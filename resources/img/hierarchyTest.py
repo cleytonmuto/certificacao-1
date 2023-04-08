@@ -9,4 +9,4 @@ sys.path.append(grandparent)
 from controller.Controlador import Controlador
 
 obj = Controlador()
-obj.run()
+obj.run("../../model/database.xlsx")

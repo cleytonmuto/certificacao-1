@@ -7,11 +7,11 @@ class ModelTest:
 
     def run(self):
         loader = SheetLoader.SheetLoader()
-        codigos, sistemas = loader.loadSistemas()
+        codigos, sistemas = loader.loadSistemas("./model/database.xlsx")
         for i in range(len(codigos)):
             print(codigos[i],sistemas[i])
         print()
-        codigosPerfis, perfis, descricoes = loader.loadPerfis()
+        codigosPerfis, perfis, descricoes = loader.loadPerfis("./model/database.xlsx")
         for i in range(len(codigosPerfis)):
             print(codigosPerfis[i],perfis[i],descricoes[i])
 

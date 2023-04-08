@@ -6,8 +6,8 @@ class SheetLoader:
     def __init__(self):
         pass
 
-    def loadSistemas(self):
-        df = pandas.read_excel("./model/database.xlsx", sheet_name="sistemas")
+    def loadSistemas(self, path):
+        df = pandas.read_excel(path, sheet_name="sistemas")
         codigo, sistema = [], []
         for elem in df["codigo"]:
             codigo.append(elem)
@@ -15,8 +15,8 @@ class SheetLoader:
             sistema.append(elem)
         return codigo, sistema
 
-    def loadPerfis(self):
-        df = pandas.read_excel("./model/database.xlsx", sheet_name="perfis")
+    def loadPerfis(self, path):
+        df = pandas.read_excel(path, sheet_name="perfis")
         codigo, perfil, descricao = [], [], []
         for elem in df["codigo"]:
             codigo.append(elem)
