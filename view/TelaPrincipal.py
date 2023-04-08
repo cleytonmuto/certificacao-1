@@ -13,10 +13,15 @@ customtkinter.set_default_color_theme("blue")
 
 class TelaPrincipal(customtkinter.CTkToplevel):
 
-    def __init__(self):
+    def __init__(self, parent):
+        super().__init__(parent)
         self.title("Sistema de Controle de Perfis")
-        self.geometry("1200x900")
+        self.geometry("1200x900+50+50")
         self.resizable(True,True)
+
+        self.lift()
+        self.focus_force()
+        self.grab_set()
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
