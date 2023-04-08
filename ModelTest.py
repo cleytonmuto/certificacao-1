@@ -6,11 +6,12 @@ class ModelTest:
         pass
 
     def run(self):
-        codigos, sistemas = SheetLoader.loadSistemas()
+        loader = SheetLoader.SheetLoader()
+        codigos, sistemas = loader.loadSistemas()
         for i in range(len(codigos)):
             print(codigos[i],sistemas[i])
         print()
-        codigosPerfis, perfis, descricoes = SheetLoader.loadPerfis()
+        codigosPerfis, perfis, descricoes = loader.loadPerfis()
         for i in range(len(codigosPerfis)):
             print(codigosPerfis[i],perfis[i],descricoes[i])
 

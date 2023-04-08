@@ -1,8 +1,10 @@
 import os
-absolutePath = os.path.abspath(os.getcwd())
+import sys
 
-if absolutePath.endswith("certificacao-1"):
-    import model.SheetLoader as SheetLoader
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+from model.SheetLoader import SheetLoader
 
 class Controlador:
 
@@ -13,5 +15,6 @@ class Controlador:
         print("Controlador...")
 
 if __name__ == "__main__":
-    controlador = Controlador()
-    controlador.run()
+    codigos, sistemas = SheetLoader.loadSistemas()
+    for i in range(len(codigos)):
+        print(codigos[i],sistemas[i])
