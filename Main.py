@@ -1,13 +1,12 @@
-import view.Login as Login
+import customtkinter
 
-class Main:
+import view.TelaPrincipal as TelaPrincipal
+
+class Main(customtkinter.CTk):
 
     def __init__(self):
         pass
 
-    def main():
-        login = Login.Login()
-        login.sgLogin()
-
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main = Main()
+    newWindow = TelaPrincipal.TelaPrincipal()

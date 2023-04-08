@@ -3,16 +3,17 @@ import customtkinter
 import os
 from PIL import Image
 
-import TelaSistema, TelaPerfil, TelaMatriz, TelaUsuario
+import view.TelaSistema as TelaSistema
+import view.TelaPerfil as TelaPerfil
+import view.TelaMatriz as TelaMatriz
+import view.TelaUsuario as TelaUsuario
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue")
 
-class App(customtkinter.CTk):
+class TelaPrincipal(customtkinter.CTkToplevel):
 
     def __init__(self):
-        super().__init__()
-        
         self.title("Sistema de Controle de Perfis")
         self.geometry("1200x900")
         self.resizable(True,True)
@@ -34,8 +35,7 @@ class App(customtkinter.CTk):
         self.navigationFrame = customtkinter.CTkFrame(self, corner_radius=0)
         self.navigationFrame.grid(row=0, column=0, sticky="nsew")
 
-        self.navigationFrameLabel = customtkinter.CTkLabel(self.navigationFrame, text="  DEV TEAM 03",
-            image=self.logo_image, compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
+        self.navigationFrameLabel = customtkinter.CTkLabel(self.navigationFrame, text="  DEV TEAM 03", image=self.logo_image, compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.navigationFrameLabel.grid(row=0, column=0, padx=20, pady=20)
 
         self.homeButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40, border_spacing=10,
@@ -103,6 +103,8 @@ class App(customtkinter.CTk):
         self.telaUsuario = TelaUsuario.TelaUsuario()
         self.telaUsuario.showAt(self.frameUsuario)
 
+        self.mainloop()
+
     def selectFrameByName(self, name):
         self.homeButton.configure(fg_color=("gray75", "gray25") if name == "home" else "transparent")
         self.frameSistemaButton.configure(fg_color=("gray75", "gray25") if name == "frameSistema" else "transparent")
@@ -155,5 +157,4 @@ class App(customtkinter.CTk):
         self.resizable(newResizable,newResizable)
     
 if __name__ == "__main__":
-    app = App()
-    app.mainloop()
+    app = TelaPrincipal()
