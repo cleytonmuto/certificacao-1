@@ -5,7 +5,7 @@ class About(customtkinter.CTkToplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.title("DEV TEAM 03")
+        self.title("DEV TEAM 03 - Turma 23.1")
         self.geometry("400x250+100+100")
         self.resizable(False,False)
         self.lift()
