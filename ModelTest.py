@@ -1,4 +1,5 @@
-import model.SheetLoader as SheetLoader
+import model.LoaderSistema as LoaderSistema
+import model.LoaderPerfil as LoaderPerfil
 
 class ModelTest:
 
@@ -6,12 +7,13 @@ class ModelTest:
         pass
 
     def run(self):
-        loader = SheetLoader.SheetLoader()
-        codigos, sistemas = loader.loadSistemas("./model/database.xlsx")
+        loaderSistema = LoaderSistema.LoaderSistema()
+        codigos, sistemas = loaderSistema.loadSistemas("./model/database.xlsx")
         for i in range(len(codigos)):
             print(codigos[i],sistemas[i])
         print()
-        codigosPerfis, perfis, descricoes = loader.loadPerfis("./model/database.xlsx")
+        loaderPerfil = LoaderPerfil.LoaderPerfil()
+        codigosPerfis, perfis, descricoes = loaderPerfil.loadPerfis("./model/database.xlsx")
         for i in range(len(codigosPerfis)):
             print(codigosPerfis[i],perfis[i],descricoes[i])
 

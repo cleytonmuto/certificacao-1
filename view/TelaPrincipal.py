@@ -100,13 +100,15 @@ class TelaPrincipal(customtkinter.CTkToplevel):
         self.homeFrame_large_image_label = customtkinter.CTkLabel(self.homeFrame, text="", image=self.large_test_image)
         self.homeFrame_large_image_label.grid(row=0, column=0, padx=20, pady=10)
 
+        self.DATABASEPATH = "./model/database.xlsx"
+
         self.frameSistema = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.telaSistema = TelaSistema.TelaSistema()
-        self.telaSistema.showAt(self.frameSistema,"./model/database.xlsx")
+        self.telaSistema.showAt(self.frameSistema, self.DATABASEPATH)
 
         self.framePerfil = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.telaPerfil = TelaPerfil.TelaPerfil()
-        self.telaPerfil.showAt(self.framePerfil)
+        self.telaPerfil.showAt(self.framePerfil, self.DATABASEPATH)
 
         self.frameMatriz = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.telaMatriz = TelaMatriz.TelaMatriz()
@@ -114,7 +116,7 @@ class TelaPrincipal(customtkinter.CTkToplevel):
 
         self.frameUsuario = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.telaUsuario = TelaUsuario.TelaUsuario()
-        self.telaUsuario.showAt(self.frameUsuario)
+        self.telaUsuario.showAt(self.frameUsuario, self.DATABASEPATH)
 
         self.mainloop()
 

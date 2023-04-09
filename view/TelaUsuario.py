@@ -1,5 +1,14 @@
 # -*- coding: utf-8 -*-
 import customtkinter
+import os
+import sys
+from functools import partial
+import tkinter.messagebox as tkmb
+
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+from controller.Controlador import Controlador
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue")
@@ -7,56 +16,89 @@ customtkinter.set_default_color_theme("blue")
 class TelaUsuario(customtkinter.CTk):
 
     def __init__(self):
-        pass
+        self.controlador = Controlador()
 
-    def showAt(self,component):
+    def drawGUIpart1(self,component,path):
+        self.path = path
         self.frameUsuarioLabel = customtkinter.CTkLabel(component,
-            text="Usuarios", font=customtkinter.CTkFont(size=24, weight="bold"))
+            text="Usuários", font=customtkinter.CTkFont(size=24, weight="bold"))
         self.frameUsuarioLabel.grid(row=0,column=0, padx=20, pady=20, sticky="W")
+        self.cpfs, self.sistemas, self.perfis = self.controlador.loadUsuarios(self.path)
+        self.matrizUsuario = []
+        for i in range(len(self.cpfs)):
+            self.matrizUsuario.append((self.cpfs[i],self.sistemas[i], self.perfis[i]))
+        self.totalRows = len(self.matrizUsuario)
+        self.totalColumns = len(self.matrizUsuario[0])
+        self.entryVar = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
+        for i in range(self.totalRows):
+            for j in range(self.totalColumns):
+                self.entryVar[i][j] = customtkinter.StringVar(value=self.matrizUsuario[i][j])
+        self.minRow = len(self.cpfs) + 1
+        
+    def drawGUIpart2(self,component):
+        self.celula = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
+        for i in range(self.totalRows):
+            for j in range(self.totalColumns):
+                self.celula[i][j] = customtkinter.CTkEntry(component,width=140,justify="center",height=32,
+                    textvariable=self.entryVar[i][j],state="readonly",font=customtkinter.CTkFont(size=12))
+                self.celula[i][j].grid(row=i + 1, column=j, padx=5, pady=5, sticky="ns")
+        
+        self.deleteButton = []
+        for i in range(self.totalRows):
+            self.deleteButton.append(customtkinter.CTkButton(component,text="Excluir", height=20, fg_color="#7F0000",
+                font=customtkinter.CTkFont(size=12), command=partial(self.deletarUsuarioEvent, i)))
+            self.deleteButton[i].grid(row=i + 1,column=self.totalColumns, padx=5, pady=5, sticky="ns")
 
-        matrizUsuario = [("111.222.333-44","1","2")]
-        totalRows = len(matrizUsuario)
-        totalColumns = len(matrizUsuario[0])
-        entryVar = [ [ 0 for j in range(totalColumns) ] for i in range(totalRows) ]
-        for i in range(totalRows):
-            for j in range(totalColumns):
-                entryVar[i][j] = customtkinter.StringVar(value=matrizUsuario[i][j])
-        minRow = 3
+        self.cpfUsuarioEntry = customtkinter.CTkEntry(component, justify="center", height=32,
+            placeholder_text="CPF do Usuário", font=customtkinter.CTkFont(size=12))
+        self.cpfUsuarioEntry.grid(row=self.minRow,column=0, padx=5, pady=5, sticky="w")
 
-        for i in range(totalRows):
-            for j in range(totalColumns):
-                self.celula = customtkinter.CTkEntry(component,width=140,justify="center",
-                    textvariable=entryVar[i][j],state="readonly",font=customtkinter.CTkFont(size=12))
-                self.celula.grid(row=i + 1, column=j, padx=0, pady=0, sticky="ns")
+        self.sistemaUsuarioEntry = customtkinter.CTkEntry(component, justify="center", height=32,
+            placeholder_text="Sistema do Usuário",font=customtkinter.CTkFont(size=12))
+        self.sistemaUsuarioEntry.grid(row=self.minRow,column=1, padx=5, pady=5, sticky="w")
 
-        self.cpfUsuarioLabel = customtkinter.CTkLabel(component,
-            text="CPF do Usuario", font=customtkinter.CTkFont(size=12))
-        self.cpfUsuarioLabel.grid(row=minRow + 2,column=0, padx=(0,10), pady=(60,10), sticky="e")
-        self.cpfUsuarioEntry = customtkinter.CTkEntry(component,
-            placeholder_text="CPF do Usuario", font=customtkinter.CTkFont(size=12))
-        self.cpfUsuarioEntry.grid(row=minRow + 2,column=1, padx=0, pady=(60,10), sticky="w")
+        self.perfilUsuarioEntry = customtkinter.CTkEntry(component, justify="center", height=32,
+            placeholder_text="Perfil do Usuário",font=customtkinter.CTkFont(size=12))
+        self.perfilUsuarioEntry.grid(row=self.minRow,column=2, padx=5, pady=5, sticky="w")
 
-        self.codigoSistemaLabel = customtkinter.CTkLabel(component,
-            text="Código do Sistema", font=customtkinter.CTkFont(size=12))
-        self.codigoSistemaLabel.grid(row=minRow + 3,column=0, padx=(0,10), pady=10, sticky="e")
-        self.codigoSistemaEntry = customtkinter.CTkEntry(component,
-            placeholder_text="Código do Sistema",font=customtkinter.CTkFont(size=12))
-        self.codigoSistemaEntry.grid(row=minRow + 3,column=1, padx=0, pady=10, sticky="w")
+        self.adicionarUsuarioButton = customtkinter.CTkButton(component,text="Adicionar", height=32,
+            fg_color="#007F00", font=customtkinter.CTkFont(size=12), command=self.adicionarUsuarioEvent)
+        self.adicionarUsuarioButton.grid(row=self.minRow, column=3, padx=5, pady=5, sticky="W")
 
-        self.codigoPerfilLabel = customtkinter.CTkLabel(component,
-            text="Código do Perfil", font=customtkinter.CTkFont(size=12))
-        self.codigoPerfilLabel.grid(row=minRow + 4,column=0, padx=(0,10), pady=10, sticky="e")
-        self.codigoPerfilEntry = customtkinter.CTkEntry(component,
-            placeholder_text="Código do Perfil",font=customtkinter.CTkFont(size=12))
-        self.codigoPerfilEntry.grid(row=minRow + 4,column=1, padx=0, pady=10, sticky="w") 
+    def showAt(self, component, path):
+        self.drawGUIpart1(component, path)
+        self.anotherComponent = component
+        self.drawGUIpart2(component)
 
-        self.adicionarUsuarioButton = customtkinter.CTkButton(component,text="Adicionar",
-            font=customtkinter.CTkFont(size=12))
-        self.adicionarUsuarioButton.grid(row=minRow + 5, column=1, padx=0, pady=10, sticky="W")
+    def adicionarUsuarioEvent(self):
+        self.controlador.addUsuario(self.path, self.cpfUsuarioEntry.get(),
+            self.sistemaUsuarioEntry.get(), self.perfilUsuarioEntry.get())
+        self.drawGUIpart1(self.anotherComponent, self.path)
+        self.cpfUsuarioEntry.destroy()
+        self.sistemaUsuarioEntry.destroy()
+        self.perfilUsuarioEntry.destroy()
+        self.adicionarUsuarioButton.destroy()
+        self.drawGUIpart2(self.anotherComponent)
     
+    def deletarUsuarioEvent(self, index):
+        if self.controlador.seguroParaDeletar(self.cpfs, 1):
+            for i in range(len(self.celula)):
+                self.deleteButton[i].destroy()
+                for j in range(len(self.celula[0])):
+                    self.celula[i][j].destroy()
+            self.cpfUsuarioEntry.destroy()
+            self.sistemaUsuarioEntry.destroy()
+            self.perfilUsuarioEntry.destroy()
+            self.adicionarUsuarioButton.destroy()
+            self.controlador.delUsuario(self.path, self.cpfs[index], self.sistemas[index], self.perfis[index])
+            self.drawGUIpart1(self.anotherComponent, self.path)
+            self.drawGUIpart2(self.anotherComponent)
+        else:
+            tkmb.showerror(title="Erro",message="Falha ao excluir.\nO limite mínimo de usuarios = 1.")
+        
 if __name__ == "__main__":
     app = customtkinter.CTk()
     app.geometry("800x600")
     external = TelaUsuario()
-    external.showAt(app)
+    external.showAt(app,"../model/database.xlsx")
     app.mainloop()

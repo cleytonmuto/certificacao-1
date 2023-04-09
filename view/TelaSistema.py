@@ -87,7 +87,7 @@ class TelaSistema(customtkinter.CTk):
             self.drawGUIpart1(self.anotherComponent, self.path)
             self.drawGUIpart2(self.anotherComponent)
         else:
-            tkmb.showerror(title="Erro",message="Falha ao deletar.\nO limite mínimo de sistemas = 2.")
+            tkmb.showerror(title="Erro",message="Falha ao excluir.\nO limite mínimo de sistemas = 2.")
         
 if __name__ == "__main__":
     app = customtkinter.CTk()
