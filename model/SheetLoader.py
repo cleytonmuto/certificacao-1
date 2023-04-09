@@ -26,27 +26,27 @@ class SheetLoader:
             descricao.append(elem)
         return codigo, perfil, descricao
 
-    def sistemas(self):
-        df = pandas.read_excel("testbase.xlsx", sheet_name="sistemas")
-        codigo, sistema = [], []
+    def addSistema(self, path, codigo, sistema):
+        df = pandas.read_excel(path, sheet_name="sistemas")
+        codigos, sistemas = [], []
         for elem in df["codigo"]:
-            codigo.append(elem)
+            codigos.append(elem)
         for elem in df["sistema"]:
-            sistema.append(elem)
+            sistemas.append(elem)
         rows = []
-        for i in range(len(codigo)):
-            rows.append([codigo[i], sistema[i]])
-        rows.append([4,"madrugada"])
+        for i in range(len(codigos)):
+            rows.append([codigos[i], sistemas[i]])
+        rows.append([codigo, sistema])
         output = pandas.DataFrame(rows, columns=["codigo","sistema"])
 
-        book = openpyxl.load_workbook("testbase.xlsx")
-        writer = pandas.ExcelWriter("testbase.xlsx", engine="openpyxl", mode="a",
+        book = openpyxl.load_workbook(path)
+        writer = pandas.ExcelWriter(path, engine="openpyxl", mode="a",
             if_sheet_exists="overlay")
         writer.workbook = book
         output.to_excel(writer, index=False, sheet_name="sistemas")
         writer.close()
-        print("done.")
 
 if __name__ == "__main__":
     loader = SheetLoader()
-    loader.sistemas()
+    loader.addSistema("testbase.xlsx", 4, "madrugada")
+    print("done.")

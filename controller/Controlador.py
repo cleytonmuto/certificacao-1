@@ -10,14 +10,20 @@ import model.SheetLoader as SheetLoader
 class Controlador:
 
     def __init__(self):
-        pass
+        self.loader = SheetLoader.SheetLoader()
 
     def run(self, path):
-        loader = SheetLoader.SheetLoader()
-        codigos, sistemas = loader.loadSistemas(path)
+        codigos, sistemas = self.loader.loadSistemas(path)
         for i in range(len(codigos)):
             print(codigos[i],sistemas[i])
 
+    def loadSistemas(self, path):
+        codigos, sistemas = self.loader.loadSistemas(path)
+        return codigos, sistemas
+    
+    def addSistema(self, path, codigo, sistema):
+        self.loader.addSistema(path, codigo, sistema)
+    
 if __name__ == "__main__":
     controlador = Controlador()
     controlador.run("../model/database.xlsx")
