@@ -2,6 +2,7 @@
 import customtkinter
 import os
 import sys
+from functools import partial
 
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
@@ -34,11 +35,18 @@ class TelaSistema(customtkinter.CTk):
         self.minRow = len(self.codigos) + 1
         
     def drawGUIpart2(self,component):
+        self.celula = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
         for i in range(self.totalRows):
             for j in range(self.totalColumns):
-                self.celula = customtkinter.CTkEntry(component,width=140,justify="center",
+                self.celula[i][j] = customtkinter.CTkEntry(component,width=140,justify="center",
                     textvariable=self.entryVar[i][j],state="readonly",font=customtkinter.CTkFont(size=12))
-                self.celula.grid(row=i + 1, column=j, padx=0, pady=0, sticky="ns")
+                self.celula[i][j].grid(row=i + 1, column=j, padx=0, pady=0, sticky="ns")
+        
+        self.deleteButton = []
+        for i in range(self.totalRows):
+            self.deleteButton.append(customtkinter.CTkButton(component,text="Delete",
+                font=customtkinter.CTkFont(size=12), command=partial(self.deletarSistemaEvent, i)))
+            self.deleteButton[i].grid(row=i + 1,column=self.totalColumns, padx=0, pady=0, sticky="ns")
 
         self.codigoSistemaLabel = customtkinter.CTkLabel(component,
             text="Código do Sistema", font=customtkinter.CTkFont(size=12))
@@ -72,10 +80,28 @@ class TelaSistema(customtkinter.CTk):
         self.nomeSistemaEntry.destroy()
         self.adicionarSistemaButton.destroy()
         self.drawGUIpart2(self.anotherComponent)
+    
+    def deletarSistemaEvent(self, index):
+        self.controlador.delSistema(self.path, self.codigos[index], self.sistemas[index])
+        for i in range(len(self.codigos)):
+            self.deleteButton[i].destroy()
+            for j in range(2):
+                self.celula[i][j].destroy()
+        self.codigos.pop(index)
+        self.sistemas.pop(index)
+        self.matrizSistema.pop(index)
+        self.entryVar.pop(index)
+        self.drawGUIpart1(self.anotherComponent, self.path)
+        self.codigoSistemaLabel.destroy()
+        self.codigoSistemaEntry.destroy()
+        self.nomeSistemaLabel.destroy()
+        self.nomeSistemaEntry.destroy()
+        self.adicionarSistemaButton.destroy()
+        self.drawGUIpart2(self.anotherComponent)
         
 if __name__ == "__main__":
     app = customtkinter.CTk()
     app.geometry("800x600")
     external = TelaSistema()
-    external.showAt(app)
+    external.showAt(app,"../model/database.xlsx")
     app.mainloop()

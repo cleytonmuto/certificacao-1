@@ -24,6 +24,9 @@ class Controlador:
     def addSistema(self, path, codigo, sistema):
         self.loader.addSistema(path, codigo, sistema)
     
+    def delSistema(self, path, codigo, sistema):
+        self.loader.delSistema(path, codigo, sistema)
+    
 if __name__ == "__main__":
     controlador = Controlador()
     controlador.run("../model/database.xlsx")
