@@ -47,7 +47,7 @@ class Main(customtkinter.CTk):
         if Utils.authenticate(self.entry1.get(),self.entry2.get()):
             TelaPrincipal.TelaPrincipal(self)
         else:
-            tkmb.showinfo(title="Login failed!",message="Usuário ou senha inválidos!")
+            tkmb.showerror(title="Falha de login",message="Usuário ou senha inválidos!")
 
     def enterKeyPressed(self, event):
         self.login()

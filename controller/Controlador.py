@@ -27,6 +27,19 @@ class Controlador:
     def delSistema(self, path, codigo, sistema):
         self.loader.delSistema(path, codigo, sistema)
     
+    def loadPerfis(self, path):
+        codigos, perfis, descricoes = self.loader.loadPerfis(path)
+        return codigos, perfis, descricoes
+    
+    def addPerfil(self, path, codigo, perfil, descricao):
+        self.loader.addPerfil(path, codigo, perfil, descricao)
+    
+    def delPerfil(self, path, codigo, perfil):
+        self.loader.delPerfil(path, codigo, perfil)
+    
+    def seguroParaDeletar(self, array, limit):
+        return True if len(array) > limit else False
+    
 if __name__ == "__main__":
     controlador = Controlador()
     controlador.run("../model/database.xlsx")

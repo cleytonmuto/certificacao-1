@@ -3,6 +3,7 @@ import customtkinter
 import os
 import sys
 from functools import partial
+import tkinter.messagebox as tkmb
 
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
@@ -38,33 +39,27 @@ class TelaSistema(customtkinter.CTk):
         self.celula = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
         for i in range(self.totalRows):
             for j in range(self.totalColumns):
-                self.celula[i][j] = customtkinter.CTkEntry(component,width=140,justify="center",
+                self.celula[i][j] = customtkinter.CTkEntry(component,width=140,justify="center",height=32,
                     textvariable=self.entryVar[i][j],state="readonly",font=customtkinter.CTkFont(size=12))
-                self.celula[i][j].grid(row=i + 1, column=j, padx=0, pady=0, sticky="ns")
+                self.celula[i][j].grid(row=i + 1, column=j, padx=5, pady=5, sticky="ns")
         
         self.deleteButton = []
         for i in range(self.totalRows):
-            self.deleteButton.append(customtkinter.CTkButton(component,text="Delete",
+            self.deleteButton.append(customtkinter.CTkButton(component,text="Excluir", height=20, fg_color="#7F0000",
                 font=customtkinter.CTkFont(size=12), command=partial(self.deletarSistemaEvent, i)))
-            self.deleteButton[i].grid(row=i + 1,column=self.totalColumns, padx=0, pady=0, sticky="ns")
+            self.deleteButton[i].grid(row=i + 1,column=self.totalColumns, padx=5, pady=5, sticky="ns")
 
-        self.codigoSistemaLabel = customtkinter.CTkLabel(component,
-            text="Código do Sistema", font=customtkinter.CTkFont(size=12))
-        self.codigoSistemaLabel.grid(row=self.minRow + 2,column=0, padx=(0,10), pady=(60,10), sticky="e")
-        self.codigoSistemaEntry = customtkinter.CTkEntry(component,
+        self.codigoSistemaEntry = customtkinter.CTkEntry(component, justify="center", height=32,
             placeholder_text="Código do Sistema", font=customtkinter.CTkFont(size=12))
-        self.codigoSistemaEntry.grid(row=self.minRow + 2,column=1, padx=0, pady=(60,10), sticky="w")
+        self.codigoSistemaEntry.grid(row=self.minRow,column=0, padx=5, pady=5, sticky="w")
 
-        self.nomeSistemaLabel = customtkinter.CTkLabel(component,
-            text="Nome do Sistema", font=customtkinter.CTkFont(size=12))
-        self.nomeSistemaLabel.grid(row=self.minRow + 3,column=0, padx=(0,10), pady=10, sticky="e")
-        self.nomeSistemaEntry = customtkinter.CTkEntry(component,
+        self.nomeSistemaEntry = customtkinter.CTkEntry(component, justify="center", height=32,
             placeholder_text="Nome do Sistema",font=customtkinter.CTkFont(size=12))
-        self.nomeSistemaEntry.grid(row=self.minRow + 3,column=1, padx=0, pady=10, sticky="w")
+        self.nomeSistemaEntry.grid(row=self.minRow,column=1, padx=5, pady=5, sticky="w")
 
-        self.adicionarSistemaButton = customtkinter.CTkButton(component,text="Adicionar",
-            font=customtkinter.CTkFont(size=12), command=self.adicionarSistemaEvent)
-        self.adicionarSistemaButton.grid(row=self.minRow + 4, column=1, padx=0, pady=10, sticky="W")
+        self.adicionarSistemaButton = customtkinter.CTkButton(component,text="Adicionar", height=32,
+            fg_color="#007F00", font=customtkinter.CTkFont(size=12), command=self.adicionarSistemaEvent)
+        self.adicionarSistemaButton.grid(row=self.minRow, column=2, padx=5, pady=5, sticky="W")
 
     def showAt(self, component, path):
         self.drawGUIpart1(component, path)
@@ -74,30 +69,25 @@ class TelaSistema(customtkinter.CTk):
     def adicionarSistemaEvent(self):
         self.controlador.addSistema(self.path, self.codigoSistemaEntry.get(), self.nomeSistemaEntry.get())
         self.drawGUIpart1(self.anotherComponent, self.path)
-        self.codigoSistemaLabel.destroy()
         self.codigoSistemaEntry.destroy()
-        self.nomeSistemaLabel.destroy()
         self.nomeSistemaEntry.destroy()
         self.adicionarSistemaButton.destroy()
         self.drawGUIpart2(self.anotherComponent)
     
     def deletarSistemaEvent(self, index):
-        self.controlador.delSistema(self.path, self.codigos[index], self.sistemas[index])
-        for i in range(len(self.codigos)):
-            self.deleteButton[i].destroy()
-            for j in range(2):
-                self.celula[i][j].destroy()
-        self.codigos.pop(index)
-        self.sistemas.pop(index)
-        self.matrizSistema.pop(index)
-        self.entryVar.pop(index)
-        self.drawGUIpart1(self.anotherComponent, self.path)
-        self.codigoSistemaLabel.destroy()
-        self.codigoSistemaEntry.destroy()
-        self.nomeSistemaLabel.destroy()
-        self.nomeSistemaEntry.destroy()
-        self.adicionarSistemaButton.destroy()
-        self.drawGUIpart2(self.anotherComponent)
+        if self.controlador.seguroParaDeletar(self.codigos, 2):
+            for i in range(len(self.celula)):
+                self.deleteButton[i].destroy()
+                for j in range(self.celula[0]):
+                    self.celula[i][j].destroy()
+            self.codigoSistemaEntry.destroy()
+            self.nomeSistemaEntry.destroy()
+            self.adicionarSistemaButton.destroy()
+            self.controlador.delSistema(self.path, self.codigos[index], self.sistemas[index])
+            self.drawGUIpart1(self.anotherComponent, self.path)
+            self.drawGUIpart2(self.anotherComponent)
+        else:
+            tkmb.showerror(title="Erro",message="Falha ao deletar.\nO limite mínimo de sistemas = 2.")
         
 if __name__ == "__main__":
     app = customtkinter.CTk()
