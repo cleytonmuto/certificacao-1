@@ -48,5 +48,5 @@ class SheetLoader:
 
 if __name__ == "__main__":
     loader = SheetLoader()
-    loader.addSistema("testbase.xlsx", 4, "madrugada")
+    loader.addSistema("database.xlsx", 4, "madrugada")
     print("done.")

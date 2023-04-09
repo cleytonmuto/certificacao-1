@@ -16,11 +16,12 @@ class TelaSistema(customtkinter.CTk):
     def __init__(self):
         self.controlador = Controlador()
 
-    def drawGUIpart1(self,component):
+    def drawGUIpart1(self,component,path):
+        self.path = path
         self.frameSistemaLabel = customtkinter.CTkLabel(component,
             text="Sistemas", font=customtkinter.CTkFont(size=24, weight="bold"))
         self.frameSistemaLabel.grid(row=0,column=0, padx=20, pady=20, sticky="W")
-        self.codigos, self.sistemas = self.controlador.loadSistemas("../model/testbase.xlsx")
+        self.codigos, self.sistemas = self.controlador.loadSistemas(self.path)
         self.matrizSistema = []
         for i in range(len(self.codigos)):
             self.matrizSistema.append((self.codigos[i],self.sistemas[i]))
@@ -57,14 +58,14 @@ class TelaSistema(customtkinter.CTk):
             font=customtkinter.CTkFont(size=12), command=self.adicionarSistemaEvent)
         self.adicionarSistemaButton.grid(row=self.minRow + 4, column=1, padx=0, pady=10, sticky="W")
 
-    def showAt(self,component):
-        self.drawGUIpart1(component)
+    def showAt(self, component, path):
+        self.drawGUIpart1(component, path)
         self.anotherComponent = component
         self.drawGUIpart2(component)
 
     def adicionarSistemaEvent(self):
-        self.controlador.addSistema("../model/testbase.xlsx", self.codigoSistemaEntry.get(), self.nomeSistemaEntry.get())
-        self.drawGUIpart1(self.anotherComponent)
+        self.controlador.addSistema(self.path, self.codigoSistemaEntry.get(), self.nomeSistemaEntry.get())
+        self.drawGUIpart1(self.anotherComponent, self.path)
         self.codigoSistemaLabel.destroy()
         self.codigoSistemaEntry.destroy()
         self.nomeSistemaLabel.destroy()

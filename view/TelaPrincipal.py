@@ -5,16 +5,16 @@ from PIL import Image
 
 absolutePath = os.path.abspath(os.getcwd())
 
-if absolutePath.endswith("certificacao-1"):
-    import view.TelaSistema as TelaSistema
-    import view.TelaPerfil as TelaPerfil
-    import view.TelaMatriz as TelaMatriz
-    import view.TelaUsuario as TelaUsuario
-elif absolutePath.endswith("view"):
+if absolutePath.endswith("view"):
     import TelaSistema
     import TelaPerfil
     import TelaMatriz
     import TelaUsuario
+else:
+    import view.TelaSistema as TelaSistema
+    import view.TelaPerfil as TelaPerfil
+    import view.TelaMatriz as TelaMatriz
+    import view.TelaUsuario as TelaUsuario
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue")
@@ -102,7 +102,7 @@ class TelaPrincipal(customtkinter.CTkToplevel):
 
         self.frameSistema = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.telaSistema = TelaSistema.TelaSistema()
-        self.telaSistema.showAt(self.frameSistema)
+        self.telaSistema.showAt(self.frameSistema,"./model/database.xlsx")
 
         self.framePerfil = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.telaPerfil = TelaPerfil.TelaPerfil()
