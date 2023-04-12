@@ -112,7 +112,7 @@ class TelaPrincipal(customtkinter.CTkToplevel):
 
         self.frameMatriz = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.telaMatriz = TelaMatriz.TelaMatriz()
-        self.telaMatriz.showAt(self.frameMatriz)
+        self.telaMatriz.showAt(self.frameMatriz, self.DATABASEPATH)
 
         self.frameUsuario = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.telaUsuario = TelaUsuario.TelaUsuario()

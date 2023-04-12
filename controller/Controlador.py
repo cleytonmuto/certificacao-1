@@ -8,6 +8,7 @@ sys.path.append(parent)
 import model.LoaderSistema as LoaderSistema
 import model.LoaderPerfil as LoaderPerfil
 import model.LoaderUsuario as LoaderUsuario
+import model.LoaderMatriz as LoaderMatriz
 
 class Controlador:
 
@@ -15,6 +16,7 @@ class Controlador:
         self.loaderSistema = LoaderSistema.LoaderSistema()
         self.loaderPerfil = LoaderPerfil.LoaderPerfil()
         self.loaderUsuario = LoaderUsuario.LoaderUsuario()
+        self.loaderMatriz = LoaderMatriz.LoaderMatriz( )
 
     def printTables(self, path):
         codigos, sistemas = self.loaderSistema.loadSistemas(path)
@@ -26,6 +28,9 @@ class Controlador:
         cpfs, sistemas, perfis = self.loaderUsuario.loadUsuarios(path)
         for i in range(len(cpfs)):
             print(cpfs[i],sistemas[i],perfis[i])
+        Mm, Mt, Mn, Cm, Ct, Cn = self.loaderMatriz.loadMatrizSoD(path)
+        for i in range(len(Mm)):
+            print(Mm[i], Mt[i], Mn[i], Cm[i], Ct[i], Cn[i])
 
     def loadSistemas(self, path):
         return self.loaderSistema.loadSistemas(path)
@@ -53,6 +58,9 @@ class Controlador:
     
     def delUsuario(self, path, cpf, sistema, perfil):
         self.loaderUsuario.delUsuario(path, cpf, sistema, perfil)
+    
+    def loadMatrizSoD(self, path):
+        return self.loaderMatriz.loadMatrizSoD(path)
     
     def seguroParaDeletar(self, array, limit):
         return True if len(array) > limit else False
