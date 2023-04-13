@@ -15,8 +15,9 @@ customtkinter.set_default_color_theme("blue")
 
 class TelaSistema(customtkinter.CTk):
 
-    def __init__(self):
+    def __init__(self, container):
         self.controlador = Controlador()
+        self.container = container
 
     def drawGUIpart1(self,component,path):
         self.path = path
@@ -67,18 +68,23 @@ class TelaSistema(customtkinter.CTk):
         self.drawGUIpart2(component)
 
     def adicionarSistemaEvent(self):
-        self.controlador.addSistema(self.path, self.codigoSistemaEntry.get(), self.nomeSistemaEntry.get())
-        self.drawGUIpart1(self.anotherComponent, self.path)
-        self.codigoSistemaEntry.destroy()
-        self.nomeSistemaEntry.destroy()
-        self.adicionarSistemaButton.destroy()
-        self.drawGUIpart2(self.anotherComponent)
+        if self.controlador.seguroParaAdicionar(self.codigoSistemaEntry.get(), self.codigos):
+            self.controlador.addSistema(self.path, self.codigoSistemaEntry.get().strip(),
+                self.nomeSistemaEntry.get().strip())
+            self.drawGUIpart1(self.anotherComponent, self.path)
+            self.codigoSistemaEntry.destroy()
+            self.nomeSistemaEntry.destroy()
+            self.adicionarSistemaButton.destroy()
+            self.drawGUIpart2(self.anotherComponent)
+            self.container.updatePerfisList(self.codigos)
+        else:
+            tkmb.showerror(title="Erro",message="Código já existente. Utilize outro código.")
     
     def deletarSistemaEvent(self, index):
         if self.controlador.seguroParaDeletar(self.codigos, 2):
             for i in range(len(self.celula)):
                 self.deleteButton[i].destroy()
-                for j in range(self.celula[0]):
+                for j in range(len(self.celula[0])):
                     self.celula[i][j].destroy()
             self.codigoSistemaEntry.destroy()
             self.nomeSistemaEntry.destroy()
@@ -86,6 +92,7 @@ class TelaSistema(customtkinter.CTk):
             self.controlador.delSistema(self.path, self.codigos[index], self.sistemas[index])
             self.drawGUIpart1(self.anotherComponent, self.path)
             self.drawGUIpart2(self.anotherComponent)
+            self.container.updatePerfisList(self.codigos)
         else:
             tkmb.showerror(title="Erro",message="Falha ao excluir.\nO limite mínimo de sistemas = 2.")
         

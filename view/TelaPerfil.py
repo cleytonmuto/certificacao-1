@@ -15,8 +15,9 @@ customtkinter.set_default_color_theme("blue")
 
 class TelaPerfil(customtkinter.CTk):
 
-    def __init__(self):
+    def __init__(self, container):
         self.controlador = Controlador()
+        self.container = container
 
     def drawGUIpart1(self,component,path):
         self.path = path
@@ -49,8 +50,11 @@ class TelaPerfil(customtkinter.CTk):
                 font=customtkinter.CTkFont(size=12), command=partial(self.deletarPerfilEvent, i)))
             self.deleteButton[i].grid(row=i + 1,column=self.totalColumns, padx=5, pady=5, sticky="ns")
 
-        self.codigoPerfilEntry = customtkinter.CTkEntry(component, justify="center", height=32,
-            placeholder_text="Código do Perfil", font=customtkinter.CTkFont(size=12))
+        self.comboBoxList, _ = self.controlador.loadSistemas(self.path)
+        self.comboBoxList = [str(x) for x in self.comboBoxList]
+        self.codigoPerfilEntry = customtkinter.CTkComboBox(component, justify="center", height=32,
+            values=self.comboBoxList, font=customtkinter.CTkFont(size=12))
+        self.codigoPerfilEntry.set(self.comboBoxList[0])
         self.codigoPerfilEntry.grid(row=self.minRow,column=0, padx=5, pady=5, sticky="w")
 
         self.nomePerfilEntry = customtkinter.CTkEntry(component, justify="center", height=32,
@@ -95,6 +99,15 @@ class TelaPerfil(customtkinter.CTk):
             self.drawGUIpart2(self.anotherComponent)
         else:
             tkmb.showerror(title="Erro",message="Falha ao excluir.\nO limite mínimo de perfis = 2.")
+    
+    def updateCodigosSistemas(self, codigosSistemas):
+        self.codigos = codigosSistemas
+        self.comboBoxList = codigosSistemas
+        self.comboBoxList = [str(x) for x in self.comboBoxList]
+        self.codigoPerfilEntry = customtkinter.CTkComboBox(self.anotherComponent, justify="center", height=32,
+            values=self.comboBoxList, font=customtkinter.CTkFont(size=12))
+        self.codigoPerfilEntry.set(self.comboBoxList[0])
+        self.codigoPerfilEntry.grid(row=self.minRow,column=0, padx=5, pady=5, sticky="w")
         
 if __name__ == "__main__":
     app = customtkinter.CTk()

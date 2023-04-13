@@ -103,11 +103,11 @@ class TelaPrincipal(customtkinter.CTkToplevel):
         self.DATABASEPATH = "./model/database.xlsx"
 
         self.frameSistema = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
-        self.telaSistema = TelaSistema.TelaSistema()
+        self.telaSistema = TelaSistema.TelaSistema(self)
         self.telaSistema.showAt(self.frameSistema, self.DATABASEPATH)
 
         self.framePerfil = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
-        self.telaPerfil = TelaPerfil.TelaPerfil()
+        self.telaPerfil = TelaPerfil.TelaPerfil(self)
         self.telaPerfil.showAt(self.framePerfil, self.DATABASEPATH)
 
         self.frameMatriz = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
@@ -119,6 +119,9 @@ class TelaPrincipal(customtkinter.CTkToplevel):
         self.telaUsuario.showAt(self.frameUsuario, self.DATABASEPATH)
 
         self.mainloop()
+
+    def updatePerfisList(self, codigosSistema):
+        self.telaPerfil.updateCodigosSistemas(codigosSistema)
 
     def selectFrameByName(self, name):
         self.homeButton.configure(fg_color=("gray75", "gray25") if name == "home" else "transparent")
