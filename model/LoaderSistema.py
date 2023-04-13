@@ -29,14 +29,7 @@ class LoaderSistema:
         writer.workbook = book
         output.to_excel(writer, index=False, sheet_name="sistemas")
         writer.close()
-    
-        book = openpyxl.load_workbook(path)
-        writer = pandas.ExcelWriter(path, engine="openpyxl", mode="a",
-            if_sheet_exists="overlay")
-        writer.workbook = book
-        output.to_excel(writer, index=False, sheet_name="perfis")
-        writer.close()
-    
+
     def delSistema(self, path, codigo, sistema):
         codigos, sistemas = self.loadSistemas(path)
         rows = []

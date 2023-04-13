@@ -13,7 +13,6 @@ class Main(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.title("Tela de Login")
-        self.iconbitmap ('view/img/icone.ico')
         self.geometry("300x350+100+100")
         self.resizable(False,False)
 
