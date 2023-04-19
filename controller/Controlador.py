@@ -28,9 +28,8 @@ class Controlador:
         cpfs, sistemas, perfis = self.loaderUsuario.loadUsuarios(path)
         for i in range(len(cpfs)):
             print(cpfs[i],sistemas[i],perfis[i])
-        Mm, Mt, Mn, Cm, Ct, Cn = self.loaderMatriz.loadMatrizSoD(path)
-        for i in range(len(Mm)):
-            print(Mm[i], Mt[i], Mn[i], Cm[i], Ct[i], Cn[i])
+        matrizSoD = self.loaderMatriz.loadMatrizSoD(path)
+        print(matrizSoD)
 
     def loadSistemas(self, path):
         return self.loaderSistema.loadSistemas(path)

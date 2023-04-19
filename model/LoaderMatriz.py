@@ -8,23 +8,18 @@ class LoaderMatriz:
 
     def loadMatrizSoD(self, path):
         df = pandas.read_excel(path, sheet_name="matrizsod")
-        Mm, Mt, Mn, Cm, Ct, Cn = [], [], [], [], [], []
-        for elem in df["Mm"]:
-            Mm.append(elem)
-        for elem in df["Mt"]:
-            Mt.append(elem)
-        for elem in df["Mn"]:
-            Mn.append(elem)
-        for elem in df["Cm"]:
-            Cm.append(elem)
-        for elem in df["Ct"]:
-            Ct.append(elem)
-        for elem in df["Cn"]:
-            Cn.append(elem)
-        return Mm, Mt, Mn, Cm, Ct, Cn
+        columnNames = []
+        for elem in df:
+            columnNames.append(str(elem))
+        columnNames.pop(0)
+        self.totalRows = self.totalColumns = len(columnNames)
+        matriz = [ [ "0" for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
+        for j in range(len(columnNames)):
+            for i in range(len(df[columnNames[j]])):
+                matriz[j][i] = df[columnNames[j]][i]
+        return matriz
 
 if __name__ == "__main__":
     loader = LoaderMatriz()
-    Mm, Mt, Mn, Cm, Ct, Cn = loader.loadMatrizSoD("database.xlsx")
-    print(Mm, Mt, Mn, Cm, Ct, Cn)
-    print("done.")
+    matrizTeste = loader.loadMatrizSoD("database.xlsx")
+    print(matrizTeste)

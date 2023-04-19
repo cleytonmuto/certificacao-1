@@ -78,7 +78,7 @@ class TelaSistema(customtkinter.CTk):
             self.drawGUIpart2(self.anotherComponent)
             self.parent.updatePerfisList(self.codigos)
         else:
-            tkmb.showerror(title="Erro",message="Código já existente. Utilize outro código.")
+            tkmb.showerror(title="Erro",message="Código já existente.\nUtilize outro código.")
     
     def deletarSistemaEvent(self, index):
         if self.controlador.seguroParaDeletar(self.codigos, 2):

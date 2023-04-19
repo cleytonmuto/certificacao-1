@@ -22,17 +22,13 @@ class TelaMatriz(customtkinter.CTk):
         self.frameMatrizLabel = customtkinter.CTkLabel(component,
             text=".", font=customtkinter.CTkFont(size=12, weight="bold"))
         self.frameMatrizLabel.grid(row=0,column=0, padx=20, pady=20, sticky="W")
-        self.Mm, self.Mt, self.Mn, self.Cm, self.Ct, self.Cn = self.controlador.loadMatrizSoD(self.path)
-        self.matrizSoD = []
-        for i in range(len(self.Mm)):
-            self.matrizSoD.append((self.Mm[i], self.Mt[i], self.Mn[i], self.Cm[i], self.Ct[i], self.Cn[i]))
-        self.totalRows = len(self.matrizSoD)
-        self.totalColumns = len(self.matrizSoD[0])
+        self.matrizSoD = self.controlador.loadMatrizSoD(self.path)
+        self.totalRows = self.totalColumns = len(self.matrizSoD)
         self.entryVar = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
         for i in range(self.totalRows):
             for j in range(self.totalColumns):
                 self.entryVar[i][j] = customtkinter.StringVar(value=self.matrizSoD[i][j])
-        self.minRow = len(self.Mm) + 1
+        self.minRow = len(self.matrizSoD) + 1
 
     def drawGUIpart2(self,component):
         self.celula = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
