@@ -72,14 +72,16 @@ class TelaUsuario(customtkinter.CTk):
         self.drawGUIpart2(component)
 
     def adicionarUsuarioEvent(self):
-        self.controlador.addUsuario(self.path, self.cpfUsuarioEntry.get(),
-            self.sistemaUsuarioEntry.get(), self.perfilUsuarioEntry.get())
-        self.drawGUIpart1(self.anotherComponent, self.path)
-        self.cpfUsuarioEntry.destroy()
-        self.sistemaUsuarioEntry.destroy()
-        self.perfilUsuarioEntry.destroy()
-        self.adicionarUsuarioButton.destroy()
-        self.drawGUIpart2(self.anotherComponent)
+        if self.controlador.seguroParaAdicionarUsuario(self.path, self.cpfUsuarioEntry.get(),
+                self.sistemaUsuarioEntry.get(), self.perfilUsuarioEntry.get()):
+            self.controlador.addUsuario(self.path, self.cpfUsuarioEntry.get(),
+                self.sistemaUsuarioEntry.get(), self.perfilUsuarioEntry.get())
+            self.drawGUIpart1(self.anotherComponent, self.path)
+            self.cpfUsuarioEntry.destroy()
+            self.sistemaUsuarioEntry.destroy()
+            self.perfilUsuarioEntry.destroy()
+            self.adicionarUsuarioButton.destroy()
+            self.drawGUIpart2(self.anotherComponent)
     
     def deletarUsuarioEvent(self, index):
         if self.controlador.seguroParaDeletar(self.cpfs, 1):

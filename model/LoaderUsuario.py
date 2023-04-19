@@ -55,5 +55,5 @@ class LoaderUsuario:
 
 if __name__ == "__main__":
     loader = LoaderUsuario()
-    loader.addUsuario("database.xlsx", "555.666.777-88", "2", "1")
-    print("done.")
+    usuarios = loader.loadUsuarios("database.xlsx")
+    print(usuarios)
