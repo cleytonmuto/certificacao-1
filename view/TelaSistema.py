@@ -68,7 +68,7 @@ class TelaSistema(customtkinter.CTk):
         self.drawGUIpart2(component)
 
     def adicionarSistemaEvent(self):
-        if self.controlador.seguroParaAdicionar(self.codigoSistemaEntry.get().strip(), self.codigos):
+        if self.controlador.seguroParaAdicionarSistema(self.codigoSistemaEntry.get().strip(), self.codigos):
             self.controlador.addSistema(self.path, self.codigoSistemaEntry.get().strip(),
                 self.nomeSistemaEntry.get().strip())
             self.drawGUIpart1(self.anotherComponent, self.path)

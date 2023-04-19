@@ -62,12 +62,17 @@ class Controlador:
     def loadMatrizSoD(self, path):
         return self.loaderMatriz.loadMatrizSoD(path)
     
-    def seguroParaAdicionar(self, element, array):
+    def seguroParaAdicionarSistema(self, element, array):
         return False if str(element).strip() in [str(x) for x in array] else True
         
     def seguroParaDeletar(self, array, limit):
         return True if len(array) > limit else False
     
+    def seguroParaAdicionarPerfil(self, codigoSistema, nomePerfil, arraySistema, arrayPerfil):
+        for k in range(len(arraySistema)):
+            if str(arraySistema[k]) == str(codigoSistema) and arrayPerfil[k].lower() == nomePerfil.lower():
+                return False
+        return True
     
 if __name__ == "__main__":
     controlador = Controlador()

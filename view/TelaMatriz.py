@@ -4,8 +4,8 @@ import os
 import sys
 
 current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
+topDir = os.path.dirname(current)
+sys.path.append(topDir)
 from controller.Controlador import Controlador
 
 customtkinter.set_appearance_mode("System")
@@ -13,8 +13,9 @@ customtkinter.set_default_color_theme("blue")
 
 class TelaMatriz(customtkinter.CTk):
 
-    def __init__(self):
+    def __init__(self, parent):
         self.controlador = Controlador()
+        self.parent = parent
     
     def drawGUIpart1(self,component,path):
         self.path = path
@@ -37,8 +38,8 @@ class TelaMatriz(customtkinter.CTk):
         self.celula = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
         for i in range(self.totalRows):
             for j in range(self.totalColumns):
-                self.celula[i][j] = customtkinter.CTkEntry(component,width=48,justify="center",height=48,
-                    textvariable=self.entryVar[i][j],state="readonly",font=customtkinter.CTkFont(size=14))
+                self.celula[i][j] = customtkinter.CTkEntry(component,width=48,height=48,justify="center",
+                    textvariable=self.entryVar[i][j],font=customtkinter.CTkFont(size=14))
                 self.celula[i][j].grid(row=i + 1, column=j, padx=0, pady=0, sticky="ns")
         
     def showAt(self, component, path):

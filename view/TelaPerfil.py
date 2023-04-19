@@ -75,14 +75,18 @@ class TelaPerfil(customtkinter.CTk):
         self.drawGUIpart2(component)
 
     def adicionarPerfilEvent(self):
-        self.controlador.addPerfil(self.path, self.codigoPerfilEntry.get(),
-            self.nomePerfilEntry.get(), self.descricaoPerfilEntry.get())
-        self.drawGUIpart1(self.anotherComponent, self.path)
-        self.codigoPerfilEntry.destroy()
-        self.nomePerfilEntry.destroy()
-        self.descricaoPerfilEntry.destroy()
-        self.adicionarPerfilButton.destroy()
-        self.drawGUIpart2(self.anotherComponent)
+        if self.controlador.seguroParaAdicionarPerfil(self.codigoPerfilEntry.get(),
+            self.nomePerfilEntry.get(), self.codigos, self.perfis):
+            self.controlador.addPerfil(self.path, self.codigoPerfilEntry.get(),
+                self.nomePerfilEntry.get(), self.descricaoPerfilEntry.get())
+            self.drawGUIpart1(self.anotherComponent, self.path)
+            self.codigoPerfilEntry.destroy()
+            self.nomePerfilEntry.destroy()
+            self.descricaoPerfilEntry.destroy()
+            self.adicionarPerfilButton.destroy()
+            self.drawGUIpart2(self.anotherComponent)
+        else:
+            tkmb.showerror(title="Erro",message="Combinação de código e nome já existente. Utilize outra combinação.")
     
     def deletarPerfilEvent(self, index):
         if self.controlador.seguroParaDeletar(self.codigos, 2):
