@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import model.LoaderSistema as LoaderSistema
 import model.LoaderPerfil as LoaderPerfil
 

@@ -6,8 +6,8 @@ from functools import partial
 import tkinter.messagebox as tkmb
 
 current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
+topDir = os.path.dirname(current)
+sys.path.append(topDir)
 from controller.Controlador import Controlador
 
 customtkinter.set_appearance_mode("System")
@@ -15,9 +15,9 @@ customtkinter.set_default_color_theme("blue")
 
 class TelaSistema(customtkinter.CTk):
 
-    def __init__(self, container):
+    def __init__(self, parent):
         self.controlador = Controlador()
-        self.container = container
+        self.parent = parent
 
     def drawGUIpart1(self,component,path):
         self.path = path
@@ -68,7 +68,7 @@ class TelaSistema(customtkinter.CTk):
         self.drawGUIpart2(component)
 
     def adicionarSistemaEvent(self):
-        if self.controlador.seguroParaAdicionar(self.codigoSistemaEntry.get(), self.codigos):
+        if self.controlador.seguroParaAdicionar(self.codigoSistemaEntry.get().strip(), self.codigos):
             self.controlador.addSistema(self.path, self.codigoSistemaEntry.get().strip(),
                 self.nomeSistemaEntry.get().strip())
             self.drawGUIpart1(self.anotherComponent, self.path)
@@ -76,7 +76,7 @@ class TelaSistema(customtkinter.CTk):
             self.nomeSistemaEntry.destroy()
             self.adicionarSistemaButton.destroy()
             self.drawGUIpart2(self.anotherComponent)
-            self.container.updatePerfisList(self.codigos)
+            self.parent.updatePerfisList(self.codigos)
         else:
             tkmb.showerror(title="Erro",message="Código já existente. Utilize outro código.")
     
@@ -92,7 +92,7 @@ class TelaSistema(customtkinter.CTk):
             self.controlador.delSistema(self.path, self.codigos[index], self.sistemas[index])
             self.drawGUIpart1(self.anotherComponent, self.path)
             self.drawGUIpart2(self.anotherComponent)
-            self.container.updatePerfisList(self.codigos)
+            self.parent.updatePerfisList(self.codigos)
         else:
             tkmb.showerror(title="Erro",message="Falha ao excluir.\nO limite mínimo de sistemas = 2.")
         

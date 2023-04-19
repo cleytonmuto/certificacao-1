@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import customtkinter
 import os
 import sys
@@ -18,7 +19,7 @@ class TelaMatriz(customtkinter.CTk):
     def drawGUIpart1(self,component,path):
         self.path = path
         self.frameMatrizLabel = customtkinter.CTkLabel(component,
-            text="Matriz", font=customtkinter.CTkFont(size=12, weight="bold"))
+            text=".", font=customtkinter.CTkFont(size=12, weight="bold"))
         self.frameMatrizLabel.grid(row=0,column=0, padx=20, pady=20, sticky="W")
         self.Mm, self.Mt, self.Mn, self.Cm, self.Ct, self.Cn = self.controlador.loadMatrizSoD(self.path)
         self.matrizSoD = []
@@ -36,8 +37,8 @@ class TelaMatriz(customtkinter.CTk):
         self.celula = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
         for i in range(self.totalRows):
             for j in range(self.totalColumns):
-                self.celula[i][j] = customtkinter.CTkEntry(component,width=80,justify="center",height=80,
-                    textvariable=self.entryVar[i][j],state="readonly",font=customtkinter.CTkFont(size=18))
+                self.celula[i][j] = customtkinter.CTkEntry(component,width=48,justify="center",height=48,
+                    textvariable=self.entryVar[i][j],state="readonly",font=customtkinter.CTkFont(size=14))
                 self.celula[i][j].grid(row=i + 1, column=j, padx=0, pady=0, sticky="ns")
         
     def showAt(self, component, path):
