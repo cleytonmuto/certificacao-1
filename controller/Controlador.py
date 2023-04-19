@@ -112,16 +112,6 @@ class Controlador:
                         contadorMatriz += 1
             matriz = self.loaderMatriz.loadMatrizSoD(path)
 
-            indicePerfilUsuario = -1
-            for i in range(len(perfis)):
-                if perfis[i].lower() == perfilUsuario.lower():
-                    indicePerfilUsuario = i
-                    break
-
-
-            if matriz[indiceEquivalente][] == 1:
-                return False
-        
         return True
 
 if __name__ == "__main__":

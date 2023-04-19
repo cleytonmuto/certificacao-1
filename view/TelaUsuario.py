@@ -3,7 +3,7 @@ import customtkinter
 import os
 import sys
 from functools import partial
-import tkinter.messagebox as tkmb
+from CTkMessagebox import CTkMessagebox
 
 current = os.path.dirname(os.path.realpath(__file__))
 topDir = os.path.dirname(current)
@@ -82,6 +82,8 @@ class TelaUsuario(customtkinter.CTk):
             self.perfilUsuarioEntry.destroy()
             self.adicionarUsuarioButton.destroy()
             self.drawGUIpart2(self.anotherComponent)
+        else:
+            CTkMessagebox(title="Erro",message="Falha ao adicionar usuário.\nConflito com a matriz SoD.",icon="cancel",width=300)
     
     def deletarUsuarioEvent(self, index):
         if self.controlador.seguroParaDeletar(self.cpfs, 1):
@@ -97,7 +99,7 @@ class TelaUsuario(customtkinter.CTk):
             self.drawGUIpart1(self.anotherComponent, self.path)
             self.drawGUIpart2(self.anotherComponent)
         else:
-            tkmb.showerror(title="Erro",message="Falha ao excluir.\nO limite mínimo de usuarios = 1.")
+            CTkMessagebox(title="Erro",message="Falha ao excluir.\nO limite mínimo de usuarios = 1.",icon="cancel",width=300)
         
 if __name__ == "__main__":
     app = customtkinter.CTk()

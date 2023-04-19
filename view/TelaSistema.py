@@ -3,7 +3,7 @@ import customtkinter
 import os
 import sys
 from functools import partial
-import tkinter.messagebox as tkmb
+from CTkMessagebox import CTkMessagebox
 
 current = os.path.dirname(os.path.realpath(__file__))
 topDir = os.path.dirname(current)
@@ -78,7 +78,7 @@ class TelaSistema(customtkinter.CTk):
             self.drawGUIpart2(self.anotherComponent)
             self.parent.updatePerfisList(self.codigos)
         else:
-            tkmb.showerror(title="Erro",message="Código já existente.\nUtilize outro código.")
+            CTkMessagebox(title="Erro",message="Código já existente.\nUtilize outro código.",icon="cancel",width=300)
     
     def deletarSistemaEvent(self, index):
         if self.controlador.seguroParaDeletar(self.codigos, 2):
@@ -94,7 +94,7 @@ class TelaSistema(customtkinter.CTk):
             self.drawGUIpart2(self.anotherComponent)
             self.parent.updatePerfisList(self.codigos)
         else:
-            tkmb.showerror(title="Erro",message="Falha ao excluir.\nO limite mínimo de sistemas = 2.")
+            CTkMessagebox(title="Erro",message="Falha ao excluir.\nO limite mínimo de sistemas = 2.",icon="cancel",width=300)
         
 if __name__ == "__main__":
     app = customtkinter.CTk()

@@ -3,7 +3,7 @@ import customtkinter
 import os
 import sys
 from functools import partial
-import tkinter.messagebox as tkmb
+from CTkMessagebox import CTkMessagebox
 
 current = os.path.dirname(os.path.realpath(__file__))
 topDir = os.path.dirname(current)
@@ -86,7 +86,7 @@ class TelaPerfil(customtkinter.CTk):
             self.adicionarPerfilButton.destroy()
             self.drawGUIpart2(self.anotherComponent)
         else:
-            tkmb.showerror(title="Erro",message="Combinação de código e\nnome já existente.\nUtilize outra combinação.")
+            CTkMessagebox(title="Erro",message="Combinação de código e\nnome já existente.\nUtilize outra combinação.",icon="cancel",width=300)
     
     def deletarPerfilEvent(self, index):
         if self.controlador.seguroParaDeletar(self.codigos, 2):
@@ -102,7 +102,7 @@ class TelaPerfil(customtkinter.CTk):
             self.drawGUIpart1(self.anotherComponent, self.path)
             self.drawGUIpart2(self.anotherComponent)
         else:
-            tkmb.showerror(title="Erro",message="Falha ao excluir.\nO limite mínimo de perfis = 2.")
+            CTkMessagebox(title="Erro",message="Falha ao excluir.\nO limite mínimo de perfis = 2.",icon="cancel",width=300)
     
     def updateCodigosSistemas(self, codigosSistemas):
         self.codigos = codigosSistemas

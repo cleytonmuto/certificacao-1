@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import customtkinter
-import tkinter.messagebox as tkmb
 import resources.Utils as Utils
 import view.TelaPrincipal as TelaPrincipal
 import view.About as About
+from CTkMessagebox import CTkMessagebox
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue")
@@ -47,7 +47,7 @@ class Main(customtkinter.CTk):
         if Utils.authenticate(self.entry1.get(),self.entry2.get()):
             TelaPrincipal.TelaPrincipal(self)
         else:
-            tkmb.showerror(title="Falha de login",message="Usuário ou senha inválidos!")
+            CTkMessagebox(title="Falha de login",message="Usuário ou senha inválidos!",icon="cancel",width=300)
 
     def enterKeyPressed(self, event):
         self.login()
