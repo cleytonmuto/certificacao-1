@@ -99,8 +99,8 @@ class Controlador:
                 indiceSistema = j
                 break
 
-        # converter sistema e perfil informados para indice da Matriz
-        # denominado "indiceEquivalente"
+        # converter sistema e perfil informados para um
+        # indice da matriz, denominado "indiceEquivalente"
         indiceEquivalente = -1
         contadorMatriz = 0
         for i in range(len(perfis)):
@@ -110,8 +110,8 @@ class Controlador:
                 else:
                     contadorMatriz += 1
 
-        # converter cada combinação de sistema e perfil do usuario CPF para
-        # um indice da matriz, denominado "outroIndiceEquivalente"
+        # converter cada combinação de sistema e perfil do usuario CPF
+        # para um indice da matriz, denominado "outroIndiceEquivalente"
         matriz = self.loaderMatriz.loadMatrizSoD(path)
         for k in range(len(usuariosCPF)):
             if usuariosCPF[k] == cpf:
