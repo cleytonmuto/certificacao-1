@@ -86,7 +86,6 @@ class Controlador:
         
         # caso nao exista, carrega os perfis e sistemas
         codigosPerfis, perfis, descricoes = self.loaderPerfil.loadPerfis(path)
-        # ["1", "2"] --> [0, 1]
         indicePerfil = -1
         for i in range(len(perfis)):
             if perfis[i].lower() == perfil.lower():
@@ -94,7 +93,6 @@ class Controlador:
                 break
 
         codigosSistemas, sistemas = self.loaderSistema.loadSistemas(path)
-        # ["1", "2", "3"] --> [0, 1, 2]
         indiceSistema = -1
         for j in range(len(codigosSistemas)):
             if str(codigosSistemas[j]) == str(sistema):
@@ -122,11 +120,8 @@ class Controlador:
                 for i in range(len(perfis)):
                     for j in range(len(codigosSistemas)):
                         index = self.getIndex(perfis,usuariosPerfis[k])
-                        print("getIndex =", index)
                         if index == i and usuariosSistemas[k] == j:
                             outroIndiceEquivalente = contadorMatriz
-                            print("indiceEquivalente =", indiceEquivalente)
-                            print("outroIndiceEquivalente =", outroIndiceEquivalente)
                             if str(matriz[indiceEquivalente][outroIndiceEquivalente]) == "1":
                                 return False
                         else:
