@@ -109,24 +109,35 @@ class Controlador:
                     indiceEquivalente = contadorMatriz
                 else:
                     contadorMatriz += 1
+        # print("cpf candidato =", cpf)
+        # print("sistema candidato =", sistema)
+        # print("perfil candidato =", perfil)
+        # print("indiceEquivalente =", indiceEquivalente)
 
         # converter cada combinação de sistema e perfil do usuario CPF
         # para um indice da matriz, denominado "outroIndiceEquivalente"
+        existeConflito = False
         matriz = self.loaderMatriz.loadMatrizSoD(path)
         for k in range(len(usuariosCPF)):
-            if usuariosCPF[k] == cpf:
+            if str(usuariosCPF[k]) == str(cpf):
+                # print("cpf a ser pesquisado =",str(usuariosCPF[k]))
                 outroIndiceEquivalente = -1
                 contadorMatriz = 0
                 for i in range(len(perfis)):
                     for j in range(len(codigosSistemas)):
                         index = self.getIndex(perfis,usuariosPerfis[k])
-                        if index == i and usuariosSistemas[k] == j:
+                        # print("perfil pesquisado =",usuariosPerfis[k])
+                        # print("indice do perfil pesquisado =", index)
+                        if index == i and str(usuariosSistemas[k]) == str(codigosSistemas[j]):
                             outroIndiceEquivalente = contadorMatriz
+                            # print("outroIndiceEquivalente encontrado =", outroIndiceEquivalente)
+                            # print("matriz[i][o] =", str(matriz[indiceEquivalente][outroIndiceEquivalente]))
                             if str(matriz[indiceEquivalente][outroIndiceEquivalente]) == "1":
-                                return False
+                                existeConflito = True
                         else:
                             contadorMatriz += 1
-        return True
+        
+        return False if existeConflito else True
     
     def getIndex(self,array,element):
         for k in range(len(array)):
