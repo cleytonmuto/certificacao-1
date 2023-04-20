@@ -61,8 +61,8 @@ class Controlador:
     def loadMatrizSoD(self, path):
         return self.loaderMatriz.loadMatrizSoD(path)
     
-    def getMatrizColumnNames(self):
-        return self.loaderMatriz.getColumnNames()
+    def getMatrizColumnNames(self, path):
+        return self.loaderMatriz.getColumnNames(path)
     
     def seguroParaAdicionarSistema(self, element, array):
         return False if str(element).strip() in [str(x) for x in array] else True
@@ -84,16 +84,8 @@ class Controlador:
                 str(usuariosPerfis[k]) == str(perfil)):
                 return False
         
-        # caso nao exista, carrega os sistemas e perfis
-        codigosSistemas, sistemas = self.loaderSistema.loadSistemas(path)
-        # ["1", "2", "3"] --> [0, 1, 2]
-        indiceSistema = -1
-        for i in range(len(sistemas)):
-            if str(sistemas[i]) == str(sistema):
-                indiceSistema = i
-                break
-
-        codigosPerfis, perfis, descricoes = self.loaderPerfil.loadPerfis(perfis)
+        # caso nao exista, carrega os perfis e sistemas
+        codigosPerfis, perfis, descricoes = self.loaderPerfil.loadPerfis(path)
         # ["1", "2"] --> [0, 1]
         indicePerfil = -1
         for i in range(len(perfis)):
@@ -101,18 +93,51 @@ class Controlador:
                 indicePerfil = i
                 break
 
-        if indiceSistema != -1 and indicePerfil != -1:
-            indiceEquivalente = -1
-            contadorMatriz = 0
-            for i in range(len(perfis)):
-                for j in range(len(sistemas)):
-                    if indicePerfil == i and indiceSistema == j:
-                        indiceEquivalente = contadorMatriz
-                    else:
-                        contadorMatriz += 1
-            matriz = self.loaderMatriz.loadMatrizSoD(path)
+        codigosSistemas, sistemas = self.loaderSistema.loadSistemas(path)
+        # ["1", "2", "3"] --> [0, 1, 2]
+        indiceSistema = -1
+        for j in range(len(codigosSistemas)):
+            if str(codigosSistemas[j]) == str(sistema):
+                indiceSistema = j
+                break
 
+        # converter sistema e perfil informados para indice da Matriz
+        # denominado "indiceEquivalente"
+        indiceEquivalente = -1
+        contadorMatriz = 0
+        for i in range(len(perfis)):
+            for j in range(len(codigosSistemas)):
+                if indicePerfil == i and indiceSistema == j:
+                    indiceEquivalente = contadorMatriz
+                else:
+                    contadorMatriz += 1
+
+        # converter cada combinação de sistema e perfil do usuario CPF para
+        # um indice da matriz, denominado "outroIndiceEquivalente"
+        matriz = self.loaderMatriz.loadMatrizSoD(path)
+        for k in range(len(usuariosCPF)):
+            if usuariosCPF[k] == cpf:
+                outroIndiceEquivalente = -1
+                contadorMatriz = 0
+                for i in range(len(perfis)):
+                    for j in range(len(codigosSistemas)):
+                        index = self.getIndex(perfis,usuariosPerfis[k])
+                        print("getIndex =", index)
+                        if index == i and usuariosSistemas[k] == j:
+                            outroIndiceEquivalente = contadorMatriz
+                            print("indiceEquivalente =", indiceEquivalente)
+                            print("outroIndiceEquivalente =", outroIndiceEquivalente)
+                            if str(matriz[indiceEquivalente][outroIndiceEquivalente]) == "1":
+                                return False
+                        else:
+                            contadorMatriz += 1
         return True
+    
+    def getIndex(self,array,element):
+        for k in range(len(array)):
+            if array[k] == element:
+                return k
+        return -1
 
 if __name__ == "__main__":
     controlador = Controlador()

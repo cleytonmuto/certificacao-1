@@ -7,6 +7,7 @@ current = os.path.dirname(os.path.realpath(__file__))
 topDir = os.path.dirname(current)
 sys.path.append(topDir)
 from controller.Controlador import Controlador
+from view.CTkToolTip import *
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue")
@@ -23,6 +24,7 @@ class TelaMatriz(customtkinter.CTk):
             text=".", font=customtkinter.CTkFont(size=12, weight="bold"))
         self.frameMatrizLabel.grid(row=0,column=0, padx=20, pady=20, sticky="W")
         self.matrizSoD = self.controlador.loadMatrizSoD(self.path)
+        self.columnName = self.controlador.getMatrizColumnNames(self.path)
         self.totalRows = self.totalColumns = len(self.matrizSoD)
         self.entryVar = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
         for i in range(self.totalRows):
@@ -37,6 +39,7 @@ class TelaMatriz(customtkinter.CTk):
                 self.celula[i][j] = customtkinter.CTkEntry(component,width=48,height=48,justify="center",
                     textvariable=self.entryVar[i][j],font=customtkinter.CTkFont(size=14))
                 self.celula[i][j].grid(row=i + 1, column=j, padx=0, pady=0, sticky="ns")
+                CTkToolTip(self.celula[i][j],message=self.columnName[i]+" \\ "+self.columnName[j])
         
     def showAt(self, component, path):
         self.drawGUIpart1(component, path)

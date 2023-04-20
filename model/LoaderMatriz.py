@@ -19,7 +19,12 @@ class LoaderMatriz:
                 matriz[j][i] = df[self.columnNames[j]][i]
         return matriz
     
-    def getColumnNames(self):
+    def getColumnNames(self, path):
+        df = pandas.read_excel(path, sheet_name="matrizsod")
+        self.columnNames = []
+        for elem in df:
+            self.columnNames.append(str(elem))
+        self.columnNames.pop(0)
         return self.columnNames
 
 if __name__ == "__main__":
