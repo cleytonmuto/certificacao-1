@@ -39,11 +39,15 @@ class TelaPrincipal(customtkinter.CTkToplevel):
         self.large_test_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "large_test_image.png")), size=(500, 150))
         self.image_icon_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "image_icon_light.png")), size=(20, 20))
         self.home_image = customtkinter.CTkImage(light_image=Image.open(os.path.join(image_path, "home_dark.png")),
-            dark_image=Image.open(os.path.join(image_path, "home_light.png")), size=(20, 20))
-        self.chat_image = customtkinter.CTkImage(light_image=Image.open(os.path.join(image_path, "chat_dark.png")),
-            dark_image=Image.open(os.path.join(image_path, "chat_light.png")), size=(20, 20))
+            dark_image=Image.open(os.path.join(image_path, "home_light.png")), size=(24, 24))
+        self.system_image = customtkinter.CTkImage(light_image=Image.open(os.path.join(image_path, "cogs_dark.png")),
+            dark_image=Image.open(os.path.join(image_path, "cogs_light.png")), size=(24, 24))
+        self.profile_image = customtkinter.CTkImage(light_image=Image.open(os.path.join(image_path, "profile_dark.png")),
+            dark_image=Image.open(os.path.join(image_path, "profile_light.png")), size=(24, 24))
+        self.matrix_image = customtkinter.CTkImage(light_image=Image.open(os.path.join(image_path, "matrix_dark.png")),
+            dark_image=Image.open(os.path.join(image_path, "matrix_light.png")), size=(24, 24))
         self.add_user_image = customtkinter.CTkImage(light_image=Image.open(os.path.join(image_path, "add_user_dark.png")),
-            dark_image=Image.open(os.path.join(image_path, "add_user_light.png")), size=(20, 20))
+            dark_image=Image.open(os.path.join(image_path, "add_user_light.png")), size=(24, 24))
 
         self.navigationFrame = customtkinter.CTkFrame(self, corner_radius=0)
         self.navigationFrame.grid(row=0, column=0, sticky="nsew")
@@ -53,28 +57,33 @@ class TelaPrincipal(customtkinter.CTkToplevel):
 
         self.homeButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40, border_spacing=10,
             text="Home", fg_color="transparent", text_color=("gray10", "gray90"), hover_color=("gray70", "gray30"),
-            image=self.home_image, anchor="w", command=self.homeButtonEvent)
-        self.homeButton.grid(row=1, column=0, sticky="ew")
+            font=customtkinter.CTkFont(size=16,weight="normal"), image=self.home_image,
+            anchor="w", command=self.homeButtonEvent)
+        self.homeButton.grid(row=1, column=0, padx=10, pady=5, sticky="ew")
 
         self.frameSistemaButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40,
             border_spacing=10, text="Sistemas", fg_color="transparent", text_color=("gray10", "gray90"),
-            hover_color=("gray70", "gray30"), image=self.chat_image, anchor="w", command=self.frameSistemaButtonEvent)
-        self.frameSistemaButton.grid(row=2, column=0, sticky="ew")
+            font=customtkinter.CTkFont(size=16,weight="normal"), hover_color=("gray70", "gray30"),
+            image=self.system_image, anchor="w", command=self.frameSistemaButtonEvent)
+        self.frameSistemaButton.grid(row=2, column=0, padx=10, pady=5, sticky="ew")
 
         self.framePerfilButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40,
             border_spacing=10, text="Perfis", fg_color="transparent", text_color=("gray10", "gray90"),
-            hover_color=("gray70", "gray30"), image=self.chat_image, anchor="w", command=self.framePerfilButtonEvent)
-        self.framePerfilButton.grid(row=3, column=0, sticky="ew")
+            font=customtkinter.CTkFont(size=16,weight="normal"), hover_color=("gray70", "gray30"),
+            image=self.profile_image, anchor="w", command=self.framePerfilButtonEvent)
+        self.framePerfilButton.grid(row=3, column=0, padx=10, pady=5, sticky="ew")
 
         self.frameMatrizButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40,
             border_spacing=10, text="Matriz SoD", fg_color="transparent", text_color=("gray10", "gray90"),
-            hover_color=("gray70", "gray30"), image=self.chat_image, anchor="w", command=self.frameMatrizButtonEvent)
-        self.frameMatrizButton.grid(row=4, column=0, sticky="ew")
+            font=customtkinter.CTkFont(size=16,weight="normal"), hover_color=("gray70", "gray30"),
+            image=self.matrix_image, anchor="w", command=self.frameMatrizButtonEvent)
+        self.frameMatrizButton.grid(row=4, column=0, padx=10, pady=5, sticky="ew")
 
         self.frameUsuarioButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40,
             border_spacing=10, text="Usuários", fg_color="transparent", text_color=("gray10", "gray90"),
-            hover_color=("gray70", "gray30"), image=self.add_user_image, anchor="w", command=self.frameUsuarioButtonEvent)
-        self.frameUsuarioButton.grid(row=5, column=0, sticky="ew")
+            font=customtkinter.CTkFont(size=16,weight="normal"), hover_color=("gray70", "gray30"),
+            image=self.add_user_image, anchor="w", command=self.frameUsuarioButtonEvent)
+        self.frameUsuarioButton.grid(row=5, column=0, padx=10, pady=5, sticky="ew")
 
         self.appearanceModeLabel = customtkinter.CTkLabel(self.navigationFrame, text="Theme:", anchor="w")
         self.appearanceModeLabel.grid(row=6, column=0, padx=20, pady=(40, 0), sticky="ns")
