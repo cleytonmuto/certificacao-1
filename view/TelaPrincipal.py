@@ -36,7 +36,7 @@ class TelaPrincipal(customtkinter.CTkToplevel):
 
         image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "img")
         self.logo_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "CustomTkinter_logo_single.png")), size=(26, 26))
-        self.large_test_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "large_test_image.png")), size=(500, 150))
+        self.banner_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "management.jpg")), size=(480, 320))
         self.image_icon_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "image_icon_light.png")), size=(20, 20))
         self.home_image = customtkinter.CTkImage(light_image=Image.open(os.path.join(image_path, "home_dark.png")),
             dark_image=Image.open(os.path.join(image_path, "home_light.png")), size=(24, 24))
@@ -52,7 +52,8 @@ class TelaPrincipal(customtkinter.CTkToplevel):
         self.navigationFrame = customtkinter.CTkFrame(self, corner_radius=0)
         self.navigationFrame.grid(row=0, column=0, sticky="nsew")
 
-        self.navigationFrameLabel = customtkinter.CTkLabel(self.navigationFrame, text="  DEV TEAM 03", image=self.logo_image, compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
+        self.navigationFrameLabel = customtkinter.CTkLabel(self.navigationFrame, text="  DEV TEAM 03",
+            image=self.logo_image, compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.navigationFrameLabel.grid(row=0, column=0, padx=20, pady=20)
 
         self.homeButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40, border_spacing=10,
@@ -106,8 +107,8 @@ class TelaPrincipal(customtkinter.CTkToplevel):
         self.homeFrame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.homeFrame.grid_columnconfigure(0, weight=1)
 
-        self.homeFrame_large_image_label = customtkinter.CTkLabel(self.homeFrame, text="", image=self.large_test_image)
-        self.homeFrame_large_image_label.grid(row=0, column=0, padx=20, pady=10)
+        self.homeFrame_label = customtkinter.CTkLabel(self.homeFrame, text="", image=self.banner_image)
+        self.homeFrame_label.grid(row=0, column=0, padx=20, pady=300)
 
         self.DATABASEPATH = "./model/database.xlsx"
 
