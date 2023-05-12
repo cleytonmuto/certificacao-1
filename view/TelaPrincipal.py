@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import customtkinter
 import os
+import customtkinter
 from PIL import Image
 
 absolutePath = os.path.abspath(os.getcwd())

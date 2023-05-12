@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-import customtkinter
 import os
 import sys
+import customtkinter
 from functools import partial
 from CTkMessagebox import CTkMessagebox
 

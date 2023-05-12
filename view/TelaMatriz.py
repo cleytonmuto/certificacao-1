@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-import customtkinter
 import os
 import sys
+import customtkinter
 
 current = os.path.dirname(os.path.realpath(__file__))
 topDir = os.path.dirname(current)

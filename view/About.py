@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import customtkinter
 import os
+import customtkinter
 from PIL import Image
 
 customtkinter.set_appearance_mode("System")
