@@ -40,11 +40,17 @@ class TelaMatriz(customtkinter.CTk):
                     textvariable=self.entryVar[i][j],font=customtkinter.CTkFont(size=14))
                 self.celula[i][j].grid(row=i + 1, column=j, padx=0, pady=0, sticky="ns")
                 CTkToolTip(self.celula[i][j],message=self.columnName[i]+" \\ "+self.columnName[j])
+        self.saveButton = customtkinter.CTkButton(component,text="Salvar",height=48,fg_color="#007F00",
+            font=customtkinter.CTkFont(size=14), command=self.salvarMatrizEvent)
+        self.saveButton.grid(row=self.totalRows + 2, column=self.totalColumns, padx=5, pady=5, sticky="W")
         
     def showAt(self, component, path):
         self.drawGUIpart1(component, path)
         self.anotherComponent = component
         self.drawGUIpart2(component)
+    
+    def salvarMatrizEvent(self):
+        self.controlador.saveMatrizSoD(self.path, self.matrizSoD)
 
 if __name__ == "__main__":
     app = customtkinter.CTk()

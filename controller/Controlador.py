@@ -61,6 +61,9 @@ class Controlador:
     def loadMatrizSoD(self, path):
         return self.loaderMatriz.loadMatrizSoD(path)
     
+    def saveMatrizSoD(self, path, matriz):
+        self.loaderMatriz.saveMatrizSoD(path, matriz)
+    
     def getMatrizColumnNames(self, path):
         return self.loaderMatriz.getColumnNames(path)
     

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pandas
+import openpyxl
 
 class LoaderMatriz:
 
@@ -26,6 +27,19 @@ class LoaderMatriz:
             self.columnNames.append(str(elem))
         self.columnNames.pop(0)
         return self.columnNames
+    
+    def saveMatrizSoD(self, path, matriz):
+        rows = []
+        rotulos = ["Mm","Mt","Mn","Cm","Ct","Cn"]
+        for i in range(len(matriz)):
+            rows.append([rotulos[i]] + matriz[i])
+        output = pandas.DataFrame(rows, columns=["X","Mm","Mt","Mn","Cm","Ct","Cn"])
+        book = openpyxl.load_workbook(path)
+        writer = pandas.ExcelWriter(path, engine="openpyxl", mode="a",
+            if_sheet_exists="overlay")
+        writer.workbook = book
+        output.to_excel(writer, index=False, sheet_name="matrizsod")
+        writer.close()
 
 if __name__ == "__main__":
     loader = LoaderMatriz()
