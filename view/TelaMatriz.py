@@ -50,7 +50,12 @@ class TelaMatriz(customtkinter.CTk):
         self.drawGUIpart2(component)
     
     def salvarMatrizEvent(self):
-        self.controlador.saveMatrizSoD(self.path, self.matrizSoD)
+        self.entryVar = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
+        for i in range(self.totalRows):
+            for j in range(self.totalColumns):
+                self.entryVar[i][j] = self.celula[i][j].get()
+            print(self.entryVar[i])
+        self.controlador.saveMatrizSoD(self.path, self.entryVar)
 
 if __name__ == "__main__":
     app = customtkinter.CTk()
