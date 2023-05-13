@@ -30,10 +30,11 @@ class LoaderMatriz:
     
     def saveMatrizSoD(self, path, matriz):
         rows = []
-        rotulos = ["Mm","Mt","Mn","Cm","Ct","Cn"]
+        rotulos = ["X","Mm","Mt","Mn","Cm","Ct","Cn"]
+        rows.append(rotulos)
         for i in range(len(matriz)):
-            rows.append([rotulos[i]] + matriz[i])
-        output = pandas.DataFrame(rows, columns=["X","Mm","Mt","Mn","Cm","Ct","Cn"])
+            rows.append([rotulos[i + 1]] + matriz[i])
+        output = pandas.DataFrame(rows, columns=rotulos)
         book = openpyxl.load_workbook(path)
         writer = pandas.ExcelWriter(path, engine="openpyxl", mode="a",
             if_sheet_exists="overlay")

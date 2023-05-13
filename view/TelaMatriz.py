@@ -54,7 +54,6 @@ class TelaMatriz(customtkinter.CTk):
         for i in range(self.totalRows):
             for j in range(self.totalColumns):
                 self.entryVar[i][j] = self.celula[i][j].get()
-            print(self.entryVar[i])
         self.controlador.saveMatrizSoD(self.path, self.entryVar)
 
 if __name__ == "__main__":
