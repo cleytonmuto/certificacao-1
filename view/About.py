@@ -35,7 +35,6 @@ class About(customtkinter.CTkToplevel):
             ("Nome", "Matrícula"),
             ("Cleyton Isamu Muto", "202303110529"),
             ("Jardel Sadala Braga", "202304258741"),
-            ("Lucas Matheus Paes Leme", "202301036501"),
             ("Moisés Eduardo Gomes da Costa", "202301218896"),
             ("Reginaldo Martins Barbosa Junior", "202302513271"),
             ("Vinicius Luiz Dias", "202301070554")]
