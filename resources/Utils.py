@@ -23,3 +23,11 @@ def authenticate(login,candidate):
     cond1 = bcrypt.checkpw(encoded,password[targetIndex].encode())
     cond2 = hash_obj_sha256.hexdigest() == hashcode[targetIndex]
     return cond1 and cond2
+
+def main():
+    usuario = "admin"
+    senha = "admin"
+    print(authenticate(usuario,senha))
+
+if __name__ == "__main__":
+    main()
