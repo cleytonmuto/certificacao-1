@@ -30,7 +30,8 @@ class LoaderMatriz:
     
     def saveMatrizSoD(self, path, matriz):
         rows = []
-        rotulos = ["X","Mm","Mt","Mn","Cm","Ct","Cn"]
+        # rotulos = ["X","Dd", "Dg", "Ds", "Da", "Rd", "Rg", "Rs", "Ra", "Fd", "Fg", "Fs", "Fa", "Ed", "Eg", "Es", "Ea"]
+        rotulos = ["X"] + self.getColumnNames(path)
         rows.append(rotulos)
         for i in range(len(matriz)):
             rows.append([rotulos[i + 1]] + matriz[i])
@@ -46,3 +47,4 @@ if __name__ == "__main__":
     loader = LoaderMatriz()
     matrizTeste = loader.loadMatrizSoD("database.xlsx")
     print(matrizTeste)
+    print(loader.getColumnNames("database.xlsx"))

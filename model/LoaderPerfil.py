@@ -9,22 +9,22 @@ class LoaderPerfil:
 
     def loadPerfis(self, path):
         df = pandas.read_excel(path, sheet_name="perfis")
-        codigo, perfil, descricao = [], [], []
-        for elem in df["codigo"]:
-            codigo.append(elem)
+        sistema, perfil, descricao = [], [], []
+        for elem in df["sistema"]:
+            sistema.append(elem)
         for elem in df["perfil"]:
             perfil.append(elem)
         for elem in df["descricao"]:
             descricao.append(elem)
-        return codigo, perfil, descricao
+        return sistema, perfil, descricao
 
-    def addPerfil(self, path, codigo, perfil, descricao):
-        codigos, perfis, descricoes = self.loadPerfis(path)
+    def addPerfil(self, path, sistema, perfil, descricao):
+        sistemas, perfis, descricoes = self.loadPerfis(path)
         rows = []
-        for i in range(len(codigos)):
-            rows.append([codigos[i], perfis[i], descricoes[i]])
-        rows.append([codigo, perfil, descricao])
-        output = pandas.DataFrame(rows, columns=["codigo","perfil","descricao"])
+        for i in range(len(sistemas)):
+            rows.append([sistemas[i], perfis[i], descricoes[i]])
+        rows.append([sistema, perfil, descricao])
+        output = pandas.DataFrame(rows, columns=["sistema","perfil","descricao"])
 
         book = openpyxl.load_workbook(path)
         writer = pandas.ExcelWriter(path, engine="openpyxl", mode="a",
@@ -33,19 +33,19 @@ class LoaderPerfil:
         output.to_excel(writer, index=False, sheet_name="perfis")
         writer.close()
 
-    def delPerfil(self, path, codigo, perfil):
-        codigos, perfis, descricoes = self.loadPerfis(path)
+    def delPerfil(self, path, sistema, perfil):
+        sistemas, perfis, descricoes = self.loadPerfis(path)
         rows = []
-        for i in range(len(codigos)):
-            rows.append([codigos[i], perfis[i], descricoes[i]])
-        for i in range(len(codigos)):
-            if codigos[i] == codigo and perfis[i] == perfil:
-                codigos.pop(i)
+        for i in range(len(sistemas)):
+            rows.append([sistemas[i], perfis[i], descricoes[i]])
+        for i in range(len(sistemas)):
+            if sistemas[i] == sistema and perfis[i] == perfil:
+                sistemas.pop(i)
                 perfis.pop(i)
                 descricoes.pop(i)
                 rows.pop(i)
                 break
-        output = pandas.DataFrame(rows, columns=["codigo","perfil","descricao"])
+        output = pandas.DataFrame(rows, columns=["sistema","perfil","descricao"])
         book = openpyxl.load_workbook(path)
         writer = pandas.ExcelWriter(path, engine="openpyxl", mode="a",
             if_sheet_exists="replace")

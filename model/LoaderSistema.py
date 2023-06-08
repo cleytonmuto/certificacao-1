@@ -52,6 +52,6 @@ class LoaderSistema:
 
 if __name__ == "__main__":
     loader = LoaderSistema()
-    loader.addSistema("database.xlsx", 4, "madrugada")
+    loader.addSistema("database.xlsx", 5, "engenharia")
     # loader.delSistema("database.xlsx", 2, "tarde")
     print("done.")
