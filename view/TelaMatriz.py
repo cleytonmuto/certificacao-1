@@ -34,34 +34,14 @@ class TelaMatriz(customtkinter.CTk):
                     if self.matrizSoD[i][j] == 1:
                         self.leftRestriction.append(self.columnName[i])
                         self.rightRestriction.append(self.columnName[j])
-        # self.totalRows = self.totalColumns = len(self.matrizSoD)
         self.totalRows = len(self.leftRestriction)
         self.totalColumns = 2
         self.entryVar = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
-        """
-        for i in range(self.totalRows):
-            for j in range(self.totalColumns):
-                self.entryVar[i][j] = customtkinter.StringVar(value=self.matrizSoD[i][j])
-        """
         for i in range(self.totalRows):
             self.entryVar[i][0] = customtkinter.StringVar(value=self.leftRestriction[i])
             self.entryVar[i][1] = customtkinter.StringVar(value=self.rightRestriction[i])
-        # self.minRow = len(self.matrizSoD) + 1
         self.minRow = len(self.leftRestriction) + 1
 
-    """
-    def drawGUIpart2(self,component):
-        self.celula = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
-        for i in range(self.totalRows):
-            for j in range(self.totalColumns):
-                self.celula[i][j] = customtkinter.CTkEntry(component,width=48,height=48,justify="center",
-                    textvariable=self.entryVar[i][j],font=customtkinter.CTkFont(size=14))
-                self.celula[i][j].grid(row=i + 1, column=j, padx=0, pady=0, sticky="ns")
-                CTkToolTip(self.celula[i][j],message=self.columnName[i]+" \\ "+self.columnName[j])
-        self.saveButton = customtkinter.CTkButton(component,text="Salvar",height=48,fg_color="#007F00",
-            font=customtkinter.CTkFont(size=14), command=self.salvarMatrizEvent)
-        self.saveButton.grid(row=self.totalRows + 2, column=self.totalColumns, padx=5, pady=5, sticky="W")
-    """
     def drawGUIpart2(self,component):
         self.celula = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
         for i in range(self.totalRows):
@@ -96,14 +76,7 @@ class TelaMatriz(customtkinter.CTk):
     def salvarMatrizEvent(self):
         leftSistema, leftPerfil = self.leftEntry.get().split(" - ")
         rightSistema, rightPerfil = self.rightEntry.get().split(" - ")
-        """
-        print("leftSistema =", leftSistema)
-        print("leftPerfil =", leftPerfil)
-        print("rightSistema =", rightSistema)
-        print("rightPerfil =", rightPerfil)
-        """
         if self.controlador.seguroParaAdicionarCombinacao(self.path, leftSistema, leftPerfil, rightSistema, rightPerfil):
-            print("entered seguroParaAdicionarCombinacao()")
             self.drawGUIpart1(self.anotherComponent, self.path)
             self.leftEntry.destroy()
             self.rightEntry.destroy()
