@@ -130,8 +130,8 @@ class TelaPrincipal(customtkinter.CTkToplevel):
 
         self.mainloop()
 
-    def updatePerfisList(self, codigosSistema):
-        self.telaPerfil.updateCodigosSistemas(codigosSistema)
+    def updatePerfisList(self, codigos, sistemas):
+        self.telaPerfil.updateCodigosSistemas(codigos, sistemas)
 
     def selectFrameByName(self, name):
         self.homeButton.configure(fg_color=("gray75", "gray25") if name == "home" else "transparent")

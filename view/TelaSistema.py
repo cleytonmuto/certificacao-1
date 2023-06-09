@@ -92,7 +92,7 @@ class TelaSistema(customtkinter.CTk):
             self.controlador.delSistema(self.path, self.codigos[index], self.sistemas[index])
             self.drawGUIpart1(self.anotherComponent, self.path)
             self.drawGUIpart2(self.anotherComponent)
-            self.parent.updatePerfisList(self.codigos)
+            self.parent.updatePerfisList(self.codigos, self.sistemas)
         else:
             CTkMessagebox(title="Erro",message="Falha ao excluir.\nO limite mínimo de sistemas = 2.",icon="cancel",width=300)
         

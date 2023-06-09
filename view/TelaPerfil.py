@@ -34,29 +34,38 @@ class TelaPerfil(customtkinter.CTk):
         for i in range(self.totalRows):
             for j in range(self.totalColumns):
                 self.entryVar[i][j] = customtkinter.StringVar(value=self.matrizPerfil[i][j])
-        self.minRow = len(self.sistemas) + 1
+        self.minRow = len(self.sistemas) + 2
         
     def drawGUIpart2(self,component):
         self.celula = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
+        self.headerText = ["SISTEMA","PERFIL","DESCRICAO"]
+        self.header = [ 0 for j in range(self.totalRows)]
+        self.headerEntryVar = [ 0 for j in range(self.totalRows)]
+        for j in range(self.totalColumns):
+            self.headerEntryVar[j] = customtkinter.StringVar(value=self.headerText[j])
+            self.header[j] = customtkinter.CTkEntry(component,width=140,justify="center",height=32,
+                textvariable=self.headerEntryVar[j],state="readonly",font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.header[j].grid(row=1, column=j, padx=5, pady=5, sticky="ns")
+
         for i in range(self.totalRows):
             for j in range(self.totalColumns):
                 self.celula[i][j] = customtkinter.CTkEntry(component,width=140,justify="center",height=32,
                     textvariable=self.entryVar[i][j],state="readonly",font=customtkinter.CTkFont(size=12))
-                self.celula[i][j].grid(row=i + 1, column=j, padx=5, pady=5, sticky="ns")
+                self.celula[i][j].grid(row=i + 2, column=j, padx=5, pady=5, sticky="ns")
         
         self.deleteButton = []
         for i in range(self.totalRows):
             self.deleteButton.append(customtkinter.CTkButton(component,text="Excluir", height=20, fg_color="#7F0000",
                 font=customtkinter.CTkFont(size=12), command=partial(self.deletarPerfilEvent, i)))
-            self.deleteButton[i].grid(row=i + 1,column=self.totalColumns, padx=5, pady=5, sticky="ns")
+            self.deleteButton[i].grid(row=i + 2,column=self.totalColumns, padx=5, pady=5, sticky="ns")
 
         self.comboBoxList, self.sistemaList = self.controlador.loadSistemas(self.path)
         self.comboBoxList = [str(x) for x in self.comboBoxList]
         self.sistemaList = [str(x) for x in self.sistemaList]
-        self.codigoPerfilEntry = customtkinter.CTkComboBox(component, justify="center", height=32,
+        self.sistemaPerfilEntry = customtkinter.CTkComboBox(component, justify="center", height=32,
             values=self.sistemaList, font=customtkinter.CTkFont(size=12))
-        self.codigoPerfilEntry.set(self.sistemaList[0])
-        self.codigoPerfilEntry.grid(row=self.minRow,column=0, padx=5, pady=5, sticky="w")
+        self.sistemaPerfilEntry.set(self.sistemaList[0])
+        self.sistemaPerfilEntry.grid(row=self.minRow,column=0, padx=5, pady=5, sticky="w")
 
         self.nomePerfilEntry = customtkinter.CTkEntry(component, justify="center", height=32,
             placeholder_text="Nome do Perfil",font=customtkinter.CTkFont(size=12))
@@ -76,13 +85,13 @@ class TelaPerfil(customtkinter.CTk):
         self.drawGUIpart2(component)
 
     def adicionarPerfilEvent(self):
-        if self.controlador.seguroParaAdicionarPerfil(self.codigoPerfilEntry.get(),
-            self.nomePerfilEntry.get(), self.codigos, self.perfis):
+        if self.controlador.seguroParaAdicionarPerfil(self.sistemaPerfilEntry.get(),
+            self.nomePerfilEntry.get(), self.sistemas, self.perfis):
             print("seguro para adicionar perfil")
-            self.controlador.addPerfil(self.path, self.codigoPerfilEntry.get(),
+            self.controlador.addPerfil(self.path, self.sistemaPerfilEntry.get(),
                 self.nomePerfilEntry.get(), self.descricaoPerfilEntry.get())
             self.drawGUIpart1(self.anotherComponent, self.path)
-            self.codigoPerfilEntry.destroy()
+            self.sistemaPerfilEntry.destroy()
             self.nomePerfilEntry.destroy()
             self.descricaoPerfilEntry.destroy()
             self.adicionarPerfilButton.destroy()
@@ -91,29 +100,29 @@ class TelaPerfil(customtkinter.CTk):
             CTkMessagebox(title="Erro",message="Combinação de código e\nnome já existente.\nUtilize outra combinação.",icon="cancel",width=300)
     
     def deletarPerfilEvent(self, index):
-        if self.controlador.seguroParaDeletar(self.codigos, 2):
+        if self.controlador.seguroParaDeletar(self.sistemas, 2):
             for i in range(len(self.celula)):
                 self.deleteButton[i].destroy()
                 for j in range(len(self.celula[0])):
                     self.celula[i][j].destroy()
-            self.codigoPerfilEntry.destroy()
+            self.sistemaPerfilEntry.destroy()
             self.nomePerfilEntry.destroy()
             self.descricaoPerfilEntry.destroy()
             self.adicionarPerfilButton.destroy()
-            self.controlador.delPerfil(self.path, self.codigos[index], self.perfis[index])
+            self.controlador.delPerfil(self.path, self.sistemas[index], self.perfis[index])
             self.drawGUIpart1(self.anotherComponent, self.path)
             self.drawGUIpart2(self.anotherComponent)
         else:
             CTkMessagebox(title="Erro",message="Falha ao excluir.\nO limite mínimo de perfis = 2.",icon="cancel",width=300)
     
-    def updateCodigosSistemas(self, codigosSistemas):
-        self.codigos = codigosSistemas
-        self.comboBoxList = codigosSistemas
-        self.comboBoxList = [str(x) for x in self.comboBoxList]
-        self.codigoPerfilEntry = customtkinter.CTkComboBox(self.anotherComponent, justify="center", height=32,
-            values=self.comboBoxList, font=customtkinter.CTkFont(size=12))
-        self.codigoPerfilEntry.set(self.comboBoxList[0])
-        self.codigoPerfilEntry.grid(row=self.minRow,column=0, padx=5, pady=5, sticky="w")
+    def updateCodigosSistemas(self, codigos, sistemas):
+        self.codigos = codigos
+        self.sistemasList = sistemas
+        self.sistemasList = [str(x) for x in self.sistemasList]
+        self.sistemaPerfilEntry = customtkinter.CTkComboBox(self.anotherComponent, justify="center", height=32,
+            values=self.sistemasList, font=customtkinter.CTkFont(size=12))
+        self.sistemaPerfilEntry.set(self.sistemasList[0])
+        self.sistemaPerfilEntry.grid(row=self.minRow,column=0, padx=5, pady=5, sticky="w")
         
 if __name__ == "__main__":
     app = customtkinter.CTk()

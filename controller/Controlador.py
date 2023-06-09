@@ -43,11 +43,11 @@ class Controlador:
     def loadPerfis(self, path):
         return self.loaderPerfil.loadPerfis(path)
     
-    def addPerfil(self, path, codigo, perfil, descricao):
-        self.loaderPerfil.addPerfil(path, codigo, perfil, descricao)
+    def addPerfil(self, path, sistema, perfil, descricao):
+        self.loaderPerfil.addPerfil(path, sistema, perfil, descricao)
     
-    def delPerfil(self, path, codigo, perfil):
-        self.loaderPerfil.delPerfil(path, codigo, perfil)
+    def delPerfil(self, path, sistema, perfil):
+        self.loaderPerfil.delPerfil(path, sistema, perfil)
 
     def loadUsuarios(self, path):
         return self.loaderUsuario.loadUsuarios(path)
