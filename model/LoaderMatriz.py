@@ -31,7 +31,6 @@ class LoaderMatriz:
     def saveMatrizSoD(self, path, matriz):
         rows = []
         rotulos = ["X"] + self.getColumnNames(path)
-        rows.append(rotulos)
         for i in range(len(matriz)):
             rows.append([rotulos[i + 1]] + matriz[i])
         output = pandas.DataFrame(rows, columns=rotulos)
