@@ -80,7 +80,6 @@ class TelaSistema(customtkinter.CTk):
         if self.controlador.seguroParaAdicionarSistema(self.codigoSistemaEntry.get().strip(), self.codigos):
             self.controlador.addSistema(self.path, self.codigoSistemaEntry.get().strip(),
                 self.nomeSistemaEntry.get().strip())
-            self.codigos, self.sistemas = self.controlador.loadSistemas(self.path)
             self.drawGUIpart1(self.anotherComponent, self.path)
             self.codigoSistemaEntry.destroy()
             self.nomeSistemaEntry.destroy()

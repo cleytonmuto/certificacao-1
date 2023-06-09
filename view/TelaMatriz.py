@@ -71,8 +71,6 @@ class TelaMatriz(customtkinter.CTk):
                 self.celula[i][j].grid(row=i + 1, column=j, padx=0, pady=24, sticky="ns")
                 CTkToolTip(self.celula[i][j],message=self.leftRestriction[i] if j == 0 else self.rightRestriction[i])
 
-        self.minRow += 1
-
         self.comboBoxList = self.controlador.getMatrizColumnNames(self.path)
         self.comboBoxList = [str(x) for x in self.comboBoxList]
 
@@ -106,13 +104,11 @@ class TelaMatriz(customtkinter.CTk):
         """
         if self.controlador.seguroParaAdicionarCombinacao(self.path, leftSistema, leftPerfil, rightSistema, rightPerfil):
             print("entered seguroParaAdicionarCombinacao()")
-            """
             self.drawGUIpart1(self.anotherComponent, self.path)
             self.leftEntry.destroy()
             self.rightEntry.destroy()
             self.saveButton.destroy()
             self.drawGUIpart2(self.anotherComponent)
-            """
         else:
             CTkMessagebox(title="Erro",message="Combinação inválida\nUtilize outra combinação.",icon="cancel",width=300)
 
