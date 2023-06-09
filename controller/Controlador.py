@@ -76,49 +76,57 @@ class Controlador:
     def seguroParaAdicionarPerfil(self, sistema, perfil, sistemas, perfis):
         for k in range(len(sistemas)):
             if str(sistemas[k]) == str(sistema) and perfis[k].lower() == perfil.lower():
+                
                 return False
         return True
     
     def seguroParaAdicionarUsuario(self, path, cpf, sistema, perfil):
+        result = dict()
         # verifica se a combinacao de cpf/sistema/perfil ja existe na planilha
         usuariosCPF, usuariosSistemas, usuariosPerfis = self.loaderUsuario.loadUsuarios(path)
         for k in range(len(usuariosCPF)):
             if (str(usuariosCPF[k]) == str(cpf) and str(usuariosSistemas[k]) == str(sistema) and
                 str(usuariosPerfis[k]) == str(perfil)):
-                return False
+                result["status"] = False
+                result["reason"] = "already exists"
+                return result
         
-        # caso nao exista, carrega os perfis e sistemas
-        codigosPerfis, perfis, descricoes = self.loaderPerfil.loadPerfis(path)
-        indicePerfil = -1
-        for i in range(len(perfis)):
-            if perfis[i].lower() == perfil.lower():
-                indicePerfil = i
-                break
-
+        # caso nao exista, carrega os sistemas e perfis
         codigosSistemas, sistemas = self.loaderSistema.loadSistemas(path)
         indiceSistema = -1
-        for j in range(len(codigosSistemas)):
-            if str(codigosSistemas[j]) == str(sistema):
-                indiceSistema = j
+        for i in range(len(sistemas)):
+            if sistemas[i].lower() == str(sistema).lower():
+                indiceSistema = i
                 break
 
+        perfilSistemas, perfis, descricoes = self.loaderPerfil.loadPerfis(path)
+        indicePerfil = -1
+        for j in range(len(perfis)):
+            if perfis[j].lower() == str(perfil).lower():
+                indicePerfil = j
+                break
+        
         # converter sistema e perfil informados para um
         # indice da matriz, denominado "indiceEquivalente"
         indiceEquivalente = -1
         contadorMatriz = 0
-        for i in range(len(perfis)):
-            for j in range(len(codigosSistemas)):
-                if indicePerfil == i and indiceSistema == j:
-                    indiceEquivalente = contadorMatriz
+        for i in range(len(sistemas)):
+            for j in range(len(perfis)):
+                if indiceSistema == i and indicePerfil == j:
+                    if indiceEquivalente == -1:
+                        indiceEquivalente = contadorMatriz
                 else:
                     contadorMatriz += 1
-        # print("cpf candidato =", cpf)
-        # print("sistema candidato =", sistema)
-        # print("perfil candidato =", perfil)
-        # print("indiceEquivalente =", indiceEquivalente)
+        """
+        print("cpf candidato =", cpf)
+        print("sistema candidato =", sistema)
+        print("perfil candidato =", perfil)
+        print("indiceEquivalente =", indiceEquivalente)
+        """
 
         # converter cada combinação de sistema e perfil do usuario CPF
         # para um indice da matriz, denominado "outroIndiceEquivalente"
+        # e comparar com o "indiceEquivalente"
         existeConflito = False
         matriz = self.loaderMatriz.loadMatrizSoD(path)
         for k in range(len(usuariosCPF)):
@@ -127,20 +135,28 @@ class Controlador:
                 outroIndiceEquivalente = -1
                 contadorMatriz = 0
                 for i in range(len(perfis)):
-                    for j in range(len(codigosSistemas)):
+                    for j in range(len(sistemas)):
                         index = self.getIndex(perfis,usuariosPerfis[k])
                         # print("perfil pesquisado =",usuariosPerfis[k])
                         # print("indice do perfil pesquisado =", index)
-                        if index == i and str(usuariosSistemas[k]) == str(codigosSistemas[j]):
-                            outroIndiceEquivalente = contadorMatriz
+                        if index == i and str(usuariosSistemas[k]) == str(sistemas[j]):
+                            if outroIndiceEquivalente == -1:
+                                outroIndiceEquivalente = contadorMatriz
                             # print("outroIndiceEquivalente encontrado =", outroIndiceEquivalente)
                             # print("matriz[i][o] =", str(matriz[indiceEquivalente][outroIndiceEquivalente]))
                             if str(matriz[indiceEquivalente][outroIndiceEquivalente]) == "1":
                                 existeConflito = True
+                                result["sistema"] = str(usuariosSistemas[k])
+                                result["perfil"] = str(usuariosPerfis[k])
                         else:
                             contadorMatriz += 1
-        
-        return False if existeConflito else True
+        if existeConflito:
+            result["status"] = False
+            result["reason"] = "restricted"
+        else:
+            result["status"] = True
+            result["reason"] = "ok"
+        return result
     
     def getIndex(self,array,element):
         for k in range(len(array)):

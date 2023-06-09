@@ -72,8 +72,9 @@ class TelaUsuario(customtkinter.CTk):
         self.drawGUIpart2(component)
 
     def adicionarUsuarioEvent(self):
-        if self.controlador.seguroParaAdicionarUsuario(self.path, self.cpfUsuarioEntry.get(),
-                self.sistemaUsuarioEntry.get(), self.perfilUsuarioEntry.get()):
+        result = self.controlador.seguroParaAdicionarUsuario(self.path, self.cpfUsuarioEntry.get(),
+                self.sistemaUsuarioEntry.get(), self.perfilUsuarioEntry.get())
+        if result["status"]:
             self.controlador.addUsuario(self.path, self.cpfUsuarioEntry.get(),
                 self.sistemaUsuarioEntry.get(), self.perfilUsuarioEntry.get())
             self.drawGUIpart1(self.anotherComponent, self.path)
@@ -82,8 +83,15 @@ class TelaUsuario(customtkinter.CTk):
             self.perfilUsuarioEntry.destroy()
             self.adicionarUsuarioButton.destroy()
             self.drawGUIpart2(self.anotherComponent)
-        else:
-            CTkMessagebox(title="Erro",message="Falha ao adicionar usuário.\nConflito com a matriz SoD.",icon="cancel",width=300)
+        elif result["reason"] == "already exists":
+            CTkMessagebox(title="Erro",message="Falha ao adicionar usuário.\n\nMotivo: usuário já existente." +
+                "\n\nusuario: " + self.cpfUsuarioEntry.get() + "\nsistema: " + self.sistemaUsuarioEntry.get() +
+                "\nperfil: " + self.perfilUsuarioEntry.get(),icon="cancel",width=300)
+        elif result["reason"] == "restricted":
+            CTkMessagebox(title="Erro",message="Falha ao adicionar usuário.\n\nMotivo: conflito de restrições com a matriz SoD." +
+                "\n\nusuario: " + self.cpfUsuarioEntry.get() + "\nsistema: " + self.sistemaUsuarioEntry.get() +
+                "\nperfil: " + self.perfilUsuarioEntry.get() + "\n\nsistema conflitante: " + result["sistema"] +
+                "\nperfil conflitante: " + result["perfil"],icon="cancel",width=300)
     
     def deletarUsuarioEvent(self, index):
         if self.controlador.seguroParaDeletar(self.cpfs, 1):
