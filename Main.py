@@ -44,8 +44,9 @@ class Main(customtkinter.CTk):
         self.bind("<Return>", self.enterKeyPressed)
 
     def login(self):
-        if Utils.authenticate(self.entry1.get(),self.entry2.get()):
-            TelaPrincipal.TelaPrincipal(self)
+        result = Utils.authenticate(self.entry1.get(),self.entry2.get())
+        if result["auth"]:
+            TelaPrincipal.TelaPrincipal(self, result["profile"])
         else:
             CTkMessagebox(title="Falha de login",message="Usuário ou senha inválidos!",icon="cancel",width=300)
 

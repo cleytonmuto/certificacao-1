@@ -21,7 +21,7 @@ customtkinter.set_default_color_theme("blue")
 
 class TelaPrincipal(customtkinter.CTkToplevel):
 
-    def __init__(self, parent):
+    def __init__(self, parent, profile):
         super().__init__(parent)
         self.title("Sistema de Controle de Perfis")
         self.geometry("1200x900+50+50")
@@ -33,6 +33,8 @@ class TelaPrincipal(customtkinter.CTkToplevel):
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
+
+        self.profile = profile
 
         image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "img")
         self.logo_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "CustomTkinter_logo_single.png")), size=(26, 26))
@@ -62,23 +64,24 @@ class TelaPrincipal(customtkinter.CTkToplevel):
             anchor="w", command=self.homeButtonEvent)
         self.homeButton.grid(row=1, column=0, padx=10, pady=5, sticky="ew")
 
-        self.frameSistemaButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40,
-            border_spacing=10, text="Sistemas", fg_color="transparent", text_color=("gray10", "gray90"),
-            font=customtkinter.CTkFont(size=16,weight="normal"), hover_color=("gray70", "gray30"),
-            image=self.system_image, anchor="w", command=self.frameSistemaButtonEvent)
-        self.frameSistemaButton.grid(row=2, column=0, padx=10, pady=5, sticky="ew")
+        if self.profile == "admin":
+            self.frameSistemaButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40,
+                border_spacing=10, text="Sistemas", fg_color="transparent", text_color=("gray10", "gray90"),
+                font=customtkinter.CTkFont(size=16,weight="normal"), hover_color=("gray70", "gray30"),
+                image=self.system_image, anchor="w", command=self.frameSistemaButtonEvent)
+            self.frameSistemaButton.grid(row=2, column=0, padx=10, pady=5, sticky="ew")
 
-        self.framePerfilButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40,
-            border_spacing=10, text="Perfis", fg_color="transparent", text_color=("gray10", "gray90"),
-            font=customtkinter.CTkFont(size=16,weight="normal"), hover_color=("gray70", "gray30"),
-            image=self.profile_image, anchor="w", command=self.framePerfilButtonEvent)
-        self.framePerfilButton.grid(row=3, column=0, padx=10, pady=5, sticky="ew")
+            self.framePerfilButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40,
+                border_spacing=10, text="Perfis", fg_color="transparent", text_color=("gray10", "gray90"),
+                font=customtkinter.CTkFont(size=16,weight="normal"), hover_color=("gray70", "gray30"),
+                image=self.profile_image, anchor="w", command=self.framePerfilButtonEvent)
+            self.framePerfilButton.grid(row=3, column=0, padx=10, pady=5, sticky="ew")
 
-        self.frameMatrizButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40,
-            border_spacing=10, text="Matriz SoD", fg_color="transparent", text_color=("gray10", "gray90"),
-            font=customtkinter.CTkFont(size=16,weight="normal"), hover_color=("gray70", "gray30"),
-            image=self.matrix_image, anchor="w", command=self.frameMatrizButtonEvent)
-        self.frameMatrizButton.grid(row=4, column=0, padx=10, pady=5, sticky="ew")
+            self.frameMatrizButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40,
+                border_spacing=10, text="Matriz SoD", fg_color="transparent", text_color=("gray10", "gray90"),
+                font=customtkinter.CTkFont(size=16,weight="normal"), hover_color=("gray70", "gray30"),
+                image=self.matrix_image, anchor="w", command=self.frameMatrizButtonEvent)
+            self.frameMatrizButton.grid(row=4, column=0, padx=10, pady=5, sticky="ew")
 
         self.frameUsuarioButton = customtkinter.CTkButton(self.navigationFrame, corner_radius=0, height=40,
             border_spacing=10, text="Usuários", fg_color="transparent", text_color=("gray10", "gray90"),
@@ -112,17 +115,18 @@ class TelaPrincipal(customtkinter.CTkToplevel):
 
         self.DATABASEPATH = "./model/database.xlsx"
 
-        self.frameSistema = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
-        self.telaSistema = TelaSistema.TelaSistema(self)
-        self.telaSistema.showAt(self.frameSistema, self.DATABASEPATH)
+        if self.profile == "admin":
+            self.frameSistema = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
+            self.telaSistema = TelaSistema.TelaSistema(self)
+            self.telaSistema.showAt(self.frameSistema, self.DATABASEPATH)
 
-        self.framePerfil = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
-        self.telaPerfil = TelaPerfil.TelaPerfil(self)
-        self.telaPerfil.showAt(self.framePerfil, self.DATABASEPATH)
+            self.framePerfil = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
+            self.telaPerfil = TelaPerfil.TelaPerfil(self)
+            self.telaPerfil.showAt(self.framePerfil, self.DATABASEPATH)
 
-        self.frameMatriz = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
-        self.telaMatriz = TelaMatriz.TelaMatriz(self)
-        self.telaMatriz.showAt(self.frameMatriz, self.DATABASEPATH)
+            self.frameMatriz = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
+            self.telaMatriz = TelaMatriz.TelaMatriz(self)
+            self.telaMatriz.showAt(self.frameMatriz, self.DATABASEPATH)
 
         self.frameUsuario = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.telaUsuario = TelaUsuario.TelaUsuario(self)
@@ -135,26 +139,31 @@ class TelaPrincipal(customtkinter.CTkToplevel):
 
     def selectFrameByName(self, name):
         self.homeButton.configure(fg_color=("gray75", "gray25") if name == "home" else "transparent")
-        self.frameSistemaButton.configure(fg_color=("gray75", "gray25") if name == "frameSistema" else "transparent")
-        self.framePerfilButton.configure(fg_color=("gray75", "gray25") if name == "framePerfil" else "transparent")
-        self.frameMatrizButton.configure(fg_color=("gray75", "gray25") if name == "frameMatriz" else "transparent")
+        if self.profile == "admin":
+            self.frameSistemaButton.configure(fg_color=("gray75", "gray25") if name == "frameSistema" else "transparent")
+            self.framePerfilButton.configure(fg_color=("gray75", "gray25") if name == "framePerfil" else "transparent")
+            self.frameMatrizButton.configure(fg_color=("gray75", "gray25") if name == "frameMatriz" else "transparent")
         self.frameUsuarioButton.configure(fg_color=("gray75", "gray25") if name == "frameUsuario" else "transparent")
+        
         if name == "home":
             self.homeFrame.grid(row=0, column=1, sticky="nsew")
         else:
             self.homeFrame.grid_forget()
-        if name == "frameSistema":
-            self.frameSistema.grid(row=0, column=1, sticky="nsew")
-        else:
-            self.frameSistema.grid_forget()
-        if name == "framePerfil":
-            self.framePerfil.grid(row=0, column=1, sticky="nsew")
-        else:
-            self.framePerfil.grid_forget()
-        if name == "frameMatriz":
-            self.frameMatriz.grid(row=0, column=1, sticky="nsew")
-        else:
-            self.frameMatriz.grid_forget()
+        
+        if self.profile == "admin":
+            if name == "frameSistema":
+                self.frameSistema.grid(row=0, column=1, sticky="nsew")
+            else:
+                self.frameSistema.grid_forget()
+            if name == "framePerfil":
+                self.framePerfil.grid(row=0, column=1, sticky="nsew")
+            else:
+                self.framePerfil.grid_forget()
+            if name == "frameMatriz":
+                self.frameMatriz.grid(row=0, column=1, sticky="nsew")
+            else:
+                self.frameMatriz.grid_forget()
+        
         if name == "frameUsuario":
             self.frameUsuario.grid(row=0, column=1, sticky="nsew")
         else:
