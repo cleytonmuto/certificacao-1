@@ -87,7 +87,6 @@ class TelaPerfil(customtkinter.CTk):
     def adicionarPerfilEvent(self):
         if self.controlador.seguroParaAdicionarPerfil(self.sistemaPerfilEntry.get(),
             self.nomePerfilEntry.get(), self.sistemas, self.perfis):
-            print("seguro para adicionar perfil")
             self.controlador.addPerfil(self.path, self.sistemaPerfilEntry.get(),
                 self.nomePerfilEntry.get(), self.descricaoPerfilEntry.get())
             self.drawGUIpart1(self.anotherComponent, self.path)
