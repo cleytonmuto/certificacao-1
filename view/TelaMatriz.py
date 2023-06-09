@@ -2,6 +2,7 @@
 import os
 import sys
 import customtkinter
+from CTkMessagebox import CTkMessagebox
 
 current = os.path.dirname(os.path.realpath(__file__))
 topDir = os.path.dirname(current)
@@ -89,18 +90,31 @@ class TelaMatriz(customtkinter.CTk):
             font=customtkinter.CTkFont(size=14), command=self.salvarMatrizEvent)
         self.saveButton.grid(row=self.minRow, column=self.totalColumns, padx=5, pady=5, sticky="W")
         
-
     def showAt(self, component, path):
         self.drawGUIpart1(component, path)
         self.anotherComponent = component
         self.drawGUIpart2(component)
     
     def salvarMatrizEvent(self):
-        self.entryVar = [ [ 0 for j in range(self.totalColumns) ] for i in range(self.totalRows) ]
-        for i in range(self.totalRows):
-            for j in range(self.totalColumns):
-                self.entryVar[i][j] = self.celula[i][j].get()
-        self.controlador.saveMatrizSoD(self.path, self.entryVar)
+        leftSistema, leftPerfil = self.leftEntry.get().split(" - ")
+        rightSistema, rightPerfil = self.rightEntry.get().split(" - ")
+        """
+        print("leftSistema =", leftSistema)
+        print("leftPerfil =", leftPerfil)
+        print("rightSistema =", rightSistema)
+        print("rightPerfil =", rightPerfil)
+        """
+        if self.controlador.seguroParaAdicionarCombinacao(self.path, leftSistema, leftPerfil, rightSistema, rightPerfil):
+            print("entered seguroParaAdicionarCombinacao()")
+            """
+            self.drawGUIpart1(self.anotherComponent, self.path)
+            self.leftEntry.destroy()
+            self.rightEntry.destroy()
+            self.saveButton.destroy()
+            self.drawGUIpart2(self.anotherComponent)
+            """
+        else:
+            CTkMessagebox(title="Erro",message="Combinação inválida\nUtilize outra combinação.",icon="cancel",width=300)
 
 if __name__ == "__main__":
     app = customtkinter.CTk()

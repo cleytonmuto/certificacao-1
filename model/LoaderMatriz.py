@@ -14,7 +14,7 @@ class LoaderMatriz:
             self.columnNames.append(str(elem))
         self.columnNames.pop(0)
         totalRows = totalColumns = len(self.columnNames)
-        matriz = [ [ "0" for j in range(totalColumns) ] for i in range(totalRows) ]
+        matriz = [ [ 0 for j in range(totalColumns) ] for i in range(totalRows) ]
         for j in range(len(self.columnNames)):
             for i in range(len(df[self.columnNames[j]])):
                 matriz[j][i] = df[self.columnNames[j]][i]
@@ -30,7 +30,6 @@ class LoaderMatriz:
     
     def saveMatrizSoD(self, path, matriz):
         rows = []
-        # rotulos = ["X","Dd", "Dg", "Ds", "Da", "Rd", "Rg", "Rs", "Ra", "Fd", "Fg", "Fs", "Fa", "Ed", "Eg", "Es", "Ea"]
         rotulos = ["X"] + self.getColumnNames(path)
         rows.append(rotulos)
         for i in range(len(matriz)):

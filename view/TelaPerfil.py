@@ -119,6 +119,7 @@ class TelaPerfil(customtkinter.CTk):
         self.codigos = codigos
         self.sistemasList = sistemas
         self.sistemasList = [str(x) for x in self.sistemasList]
+        self.sistemaPerfilEntry.destroy()
         self.sistemaPerfilEntry = customtkinter.CTkComboBox(self.anotherComponent, justify="center", height=32,
             values=self.sistemasList, font=customtkinter.CTkFont(size=12))
         self.sistemaPerfilEntry.set(self.sistemasList[0])

@@ -28,8 +28,8 @@ class Controlador:
         cpfs, sistemas, perfis = self.loaderUsuario.loadUsuarios(path)
         for i in range(len(cpfs)):
             print(cpfs[i],sistemas[i],perfis[i])
-        matrizSoD = self.loaderMatriz.loadMatrizSoD(path)
-        print(matrizSoD)
+        self.matrizSoD = self.loaderMatriz.loadMatrizSoD(path)
+        print(self.matrizSoD)
 
     def loadSistemas(self, path):
         return self.loaderSistema.loadSistemas(path)
@@ -76,9 +76,24 @@ class Controlador:
     def seguroParaAdicionarPerfil(self, sistema, perfil, sistemas, perfis):
         for k in range(len(sistemas)):
             if str(sistemas[k]) == str(sistema) and perfis[k].lower() == perfil.lower():
-                
                 return False
         return True
+    
+    def seguroParaAdicionarCombinacao(self, path, sistema1, perfil1, sistema2, perfil2):
+        rowName = str(sistema1) + " - " + str(perfil1)
+        columnName = str(sistema2) + " - " + str(perfil2)
+        self.matrizSoD = self.loaderMatriz.loadMatrizSoD(path)
+        rowNames = columnNames = self.getMatrizColumnNames(path)
+        freeCombination = False
+        for row in range(len(rowNames)):
+            for column in range(len(columnNames)):
+                if rowNames[row] == rowName and columnNames[column] == columnName:
+                    if self.matrizSoD[row][column] == 0:
+                        freeCombination = True
+                        self.matrizSoD[row][column] = 1
+                        self.matrizSoD[column][row] = 1
+                        self.loaderMatriz.saveMatrizSoD(path, self.matrizSoD)
+        return freeCombination
     
     def seguroParaAdicionarUsuario(self, path, cpf, sistema, perfil):
         result = dict()
