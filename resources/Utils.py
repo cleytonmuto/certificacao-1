@@ -16,14 +16,16 @@ def authenticate(login,candidate):
         password.append(array[5 * i + 2])
         hashcode.append(array[5 * i + 3])
         profile.append(array[5 * i + 4])
+    result = dict()
+    result["auth"] = False
+    result["profile"] = "none"
     if username.count(login) == 0:
-        return False
+        return result
     targetIndex = username.index(login)
     encoded = candidate.encode()
     hash_obj_sha256 = hashlib.sha256(encoded)
     cond1 = bcrypt.checkpw(encoded,password[targetIndex].encode())
     cond2 = hash_obj_sha256.hexdigest() == hashcode[targetIndex]
-    result = dict()
     result["auth"] = cond1 and cond2
     if result["auth"]:
         result["profile"] = profile[targetIndex]

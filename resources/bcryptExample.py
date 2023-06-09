@@ -1,7 +1,7 @@
 import bcrypt
 
 def main():
-    array = ["Estacio@2023", "fulano", "beltrano"]
+    array = ["Estacio@2023", "Yduqs@2023"]
     for password in array:
         encoded = password.encode()
         salt = bcrypt.gensalt()
